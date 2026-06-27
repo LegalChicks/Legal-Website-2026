@@ -702,7 +702,7 @@ function Contact() {
                 </div>
                 <div>
                   <h4 className="text-sm text-white/60 font-medium mb-1 uppercase tracking-wider">WhatsApp Direct Line</h4>
-                  <p className="text-3xl font-bold text-white group-hover:text-secondary transition-colors">0976 004 4255</p>
+                  <p className="text-3xl font-bold text-white group-hover:text-secondary transition-colors">Chat with Us</p>
                 </div>
               </a>
 
@@ -853,7 +853,7 @@ function Footer() {
             <h4 className="font-bold text-white mb-4 uppercase tracking-wider text-sm">Contact Info</h4>
             <ul className="space-y-3 font-light text-white/70">
               <li className="flex items-center gap-2">
-                <MessageCircle className="w-4 h-4 text-secondary" /> 0976 004 4255
+                <MessageCircle className="w-4 h-4 text-secondary" /> WhatsApp
               </li>
               <li className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-secondary" /> Centro Northeast, Solana, Cagayan Valley
