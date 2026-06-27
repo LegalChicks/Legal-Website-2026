@@ -1,4 +1,11 @@
 import React, { useState, useEffect } from "react";
+import vid1 from "@assets/IMG_6014_1782536088478.mov";
+import vid2 from "@assets/IMG_6012_1782536088478.mov";
+import vid3 from "@assets/IMG_6013_1782536088478.mov";
+import vid4 from "@assets/gemini_generated_video_9FCDD83F_1782536088478.mp4";
+import vid5 from "@assets/IMG_5979_1782536122763.mov";
+import vid6 from "@assets/IMG_5980_1782536122763.mov";
+import vid7 from "@assets/IMG_5981_1782536122763.mov";
 import { motion, AnimatePresence } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -556,12 +563,14 @@ function Products() {
 }
 
 function Gallery() {
-  const images = [
-    { label: "Our Healthy Flock", class: "col-span-1 md:col-span-2 md:row-span-2 aspect-square md:aspect-auto", grad: "from-[#3a0d0d] to-[#5a1919]" },
-    { label: "Biosecure Coop Facilities", class: "col-span-1 aspect-square", grad: "from-[#2c3e50] to-[#000000]" },
-    { label: "Premium Brown Eggs — Freshly Gathered", class: "col-span-1 aspect-square", grad: "from-[#d4af37] to-[#8b5a2b]" },
-    { label: "Dark Mahogany Rooster — Breeding Stock", class: "col-span-1 aspect-square", grad: "from-[#8b2e2e] to-[#3a0d0d]" },
-    { label: "Day-Old Chicks — Fully Vaccinated", class: "col-span-1 aspect-square", grad: "from-[#f3d97c] to-[#d4af37]" }
+  const videos = [
+    { src: vid1, label: "Our Healthy Flock", gridClass: "col-span-1 sm:col-span-2 row-span-2" },
+    { src: vid2, label: "Coop Facilities", gridClass: "col-span-1" },
+    { src: vid3, label: "Daily Farm Operations", gridClass: "col-span-1" },
+    { src: vid4, label: "LCPF Farm Showcase", gridClass: "col-span-1" },
+    { src: vid5, label: "Flock in Action", gridClass: "col-span-1" },
+    { src: vid6, label: "Breeding Stock", gridClass: "col-span-1" },
+    { src: vid7, label: "Dark Mahogany Roosters", gridClass: "col-span-1" },
   ];
 
   return (
@@ -574,31 +583,30 @@ function Gallery() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[250px]">
-          {images.map((img, i) => (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 auto-rows-[220px]">
+          {videos.map((vid, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className={`relative rounded-2xl overflow-hidden shadow-md group ${img.class} bg-gradient-to-br ${img.grad}`}
+              transition={{ delay: i * 0.07 }}
+              className={`relative rounded-2xl overflow-hidden shadow-md group bg-[#1a0808] ${vid.gridClass}`}
             >
-              {/* Overlay styling to simulate image placeholders with rich texture */}
-              <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] mix-blend-overlay transition-opacity duration-500 group-hover:opacity-40"></div>
-              <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors duration-500"></div>
-              <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
-                <span className="text-white font-medium text-lg tracking-wide shadow-black drop-shadow-md">{img.label}</span>
+              <video
+                src={vid.src}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500" />
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
+                <span className="text-white font-medium text-sm md:text-base tracking-wide drop-shadow-md">{vid.label}</span>
               </div>
             </motion.div>
           ))}
-        </div>
-
-        <div className="mt-12 text-center">
-          <p className="text-muted-foreground inline-flex items-center gap-2 bg-muted/50 px-6 py-3 rounded-full text-sm">
-            <MessageCircle className="w-4 h-4" />
-            Contact us on WhatsApp to request live farm photos and documentation.
-          </p>
         </div>
       </div>
     </section>
