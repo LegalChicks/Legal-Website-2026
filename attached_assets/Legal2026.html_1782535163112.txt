@@ -1,0 +1,702 @@
+```html
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Chicks Poultry Farm | Premium Rhode Island Reds</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mahogany: {
+                            50: '#fcf8f8',
+                            100: '#f5e6e6',
+                            200: '#e6c2c2',
+                            500: '#8b2e2e',
+                            700: '#5a1919',
+                            900: '#3a0d0d',
+                        },
+                        eggshell: '#faf9f6',
+                        gold: '#d4af37',
+                        goldlight: '#f3d97c'
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hero-bg {
+            background-color: #3a0d0d;
+            background-image: linear-gradient(to right, rgba(58, 13, 13, 0.95), rgba(58, 13, 13, 0.7)), url('IMG_4962.PNG');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .glass-nav {
+            background: rgba(250, 249, 246, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Hide scrollbar for gallery */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-eggshell text-gray-800 font-sans antialiased selection:bg-mahogany-500 selection:text-white">
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/639760044255" target="_blank" class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform duration-300 animate-pulse-slow flex items-center justify-center group">
+        <i data-lucide="message-circle" class="w-7 h-7"></i>
+        <span class="absolute right-full mr-4 bg-gray-900 text-white text-sm px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">Chat with us!</span>
+    </a>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent border-b border-transparent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md">
+                        <i data-lucide="egg" class="h-6 w-6 text-mahogany-700"></i>
+                    </div>
+                    <span id="nav-brand" class="font-serif font-bold text-2xl tracking-tight text-white transition-colors duration-300">LEGAL CHICKS</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#about" class="nav-link text-gray-200 hover:text-gold transition font-medium">Our Story</a>
+                    <a href="#trust" class="nav-link text-gray-200 hover:text-gold transition font-medium">Why Trust Us?</a>
+                    <a href="#gallery" class="nav-link text-gray-200 hover:text-gold transition font-medium">Farm Gallery</a>
+                    <a href="#faq" class="nav-link text-gray-200 hover:text-gold transition font-medium">FAQs</a>
+                </div>
+                <div class="hidden md:flex">
+                    <a href="#order" class="bg-gold hover:bg-goldlight text-mahogany-900 px-7 py-2.5 rounded-full font-bold transition shadow-lg hover:shadow-gold/50 transform hover:-translate-y-0.5">
+                        Order Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg min-h-screen flex items-center pt-20 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div class="max-w-3xl reveal active">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-white mb-8 shadow-sm">
+                    <span class="flex h-2 w-2 relative">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                    </span>
+                    <span class="text-xs font-semibold tracking-wider uppercase">Cagayan Valley's Premier RIR Hub</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl font-serif font-black text-white leading-tight mb-6 drop-shadow-xl">
+                    Purebred Quality. <br>
+                    <span class="text-gold italic font-light">Zero Compromise.</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-200 mb-10 leading-relaxed max-w-2xl font-light drop-shadow-md">
+                    Elevating agricultural standards in Solana. We engineer premium, chemical-free Rhode Island Reds. Experience thicker shells, richer yolks, and vigorous "Dark Mahogany" genetics.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-5">
+                    <a href="#order" class="bg-gold hover:bg-white text-mahogany-900 text-center px-8 py-4 rounded-full font-bold text-lg transition-all shadow-[0_0_20px_rgba(212,175,55,0.4)] hover:shadow-[0_0_25px_rgba(255,255,255,0.6)] transform hover:-translate-y-1">
+                        Secure Your Fresh Order
+                    </a>
+                    <a href="#about" class="bg-transparent border border-gray-400 text-white hover:bg-white/10 hover:border-white text-center px-8 py-4 rounded-full font-medium text-lg transition backdrop-blur-sm">
+                        Discover Our Heritage
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Decorative Bottom Curve -->
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
+            <svg class="relative block w-full h-[50px] md:h-[100px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="fill-eggshell"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- History & Heritage Section -->
+    <section id="about" class="py-24 bg-eggshell relative">
+        <!-- Abstract Shapes -->
+        <div class="absolute top-0 left-0 w-72 h-72 bg-mahogany-200 rounded-full mix-blend-multiply filter blur-2xl opacity-30 animate-blob"></div>
+        <div class="absolute top-0 right-0 w-72 h-72 bg-goldlight rounded-full mix-blend-multiply filter blur-2xl opacity-30 animate-blob animation-delay-2000"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="relative group reveal">
+                    <div class="absolute inset-0 bg-mahogany-700 rounded-3xl transform rotate-3 scale-105 opacity-10 transition duration-500 group-hover:rotate-6"></div>
+                    <img src="IMG_4418.PNG" onerror="this.src='https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?q=80&w=1000&auto=format&fit=crop'" alt="Premium Rhode Island Red at LCPF" class="relative z-10 rounded-3xl shadow-2xl object-cover h-[550px] w-full border-4 border-white transition-transform duration-700 group-hover:-translate-y-2">
+                    
+                    <!-- Floating Stat Badge -->
+                    <div class="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-xl z-20 flex items-center gap-4 animate-bounce" style="animation-duration: 3s;">
+                        <div class="bg-mahogany-50 p-3 rounded-full text-mahogany-700">
+                            <i data-lucide="trending-up" class="w-8 h-8"></i>
+                        </div>
+                        <div>
+                            <p class="font-serif font-black text-2xl text-gray-900">100%</p>
+                            <p class="text-xs font-bold text-gray-500 uppercase tracking-widest">Natural Output</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="reveal">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="h-[2px] w-12 bg-gold"></span>
+                        <h2 class="text-mahogany-700 font-bold tracking-widest uppercase text-xs">The LCPF Origin</h2>
+                    </div>
+                    <h3 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-8 leading-tight">From Corporate Precision to Agricultural Excellence.</h3>
+                    
+                    <div class="space-y-5 text-gray-600 text-lg font-light leading-relaxed">
+                        <p>
+                            Legal Chicks Poultry Farm (LCPF) wasn't born out of a backyard hobby—it was engineered from a vision of <strong class="font-semibold text-mahogany-900">precision, verifiable data, and uncompromising quality.</strong> 
+                        </p>
+                        <p>
+                            Founded by Froilan Dave A. Lingan, a former corporate banking associate, LCPF applies strict institutional discipline to poultry farming. Moving away from chemically-dependent commercial chickens, we recognized that the Cagayan Valley deserved a cleaner, superior product.
+                        </p>
+                        <p>
+                            By utilizing the legendary <strong class="font-semibold text-mahogany-900">Rhode Island Red (RIR) "Dark Mahogany"</strong> strain, integrating a custom Farm OS, and adhering to Good Animal Husbandry Practices (GAHP), we've created a biological powerhouse that produces safely and sustainably.
+                        </p>
+                        <div class="bg-white border-l-4 border-gold p-6 rounded-r-2xl shadow-sm mt-8">
+                            <p class="italic text-mahogany-900 font-medium">
+                                "Our mission is to evolve from One Coop to a Community. We are building the foundation for Solana to become the Backyard Egg Multiplier Capital of the Country."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 100% Trust & Transparency Section -->
+    <section id="trust" class="py-24 bg-mahogany-900 text-eggshell relative overflow-hidden">
+        <!-- SVG background pattern -->
+        <div class="absolute inset-0 opacity-5">
+            <svg class="h-full w-full" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <pattern id="grid-pattern" width="40" height="40" patternUnits="userSpaceOnUse">
+                        <path d="M0 40L40 0H20L0 20M40 40V20L20 40" stroke="white" stroke-width="1" fill="none"/>
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid-pattern)"/>
+            </svg>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <span class="text-gold font-bold tracking-widest uppercase text-xs mb-2 block">Guaranteed Safety & Quality</span>
+                <h3 class="text-4xl md:text-5xl font-serif font-bold text-white mb-6">Why 100% Trust LCPF?</h3>
+                <p class="text-mahogany-100 max-w-2xl mx-auto text-lg font-light">We don't just make marketing claims; we operate under strict, verifiable protocols. When you invest in our products, you invest in peace of mind.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Trust Cards -->
+                <div class="bg-mahogany-800/40 border border-mahogany-700/50 backdrop-blur-sm p-8 rounded-3xl hover:bg-mahogany-800 transition-colors duration-300 reveal group">
+                    <div class="w-14 h-14 bg-mahogany-900/50 rounded-2xl flex items-center justify-center mb-6 border border-mahogany-700 group-hover:border-gold transition-colors">
+                        <i data-lucide="shield-check" class="w-7 h-7 text-gold"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">Zero-Walk-In Biosecurity</h4>
+                    <p class="text-sm text-mahogany-100/80 leading-relaxed">Strict perimeter control prevents Avian Flu & ND. Our flock remains isolated, stress-free, and highly protected.</p>
+                </div>
+
+                <div class="bg-mahogany-800/40 border border-mahogany-700/50 backdrop-blur-sm p-8 rounded-3xl hover:bg-mahogany-800 transition-colors duration-300 reveal group" style="transition-delay: 100ms;">
+                    <div class="w-14 h-14 bg-mahogany-900/50 rounded-2xl flex items-center justify-center mb-6 border border-mahogany-700 group-hover:border-gold transition-colors">
+                        <i data-lucide="file-badge" class="w-7 h-7 text-gold"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">Officially Registered</h4>
+                    <p class="text-sm text-mahogany-100/80 leading-relaxed">A fully legal, DTI & RSBSA registered agricultural producer adhering strictly to DA-BAI GAHP standards.</p>
+                </div>
+
+                <div class="bg-mahogany-800/40 border border-mahogany-700/50 backdrop-blur-sm p-8 rounded-3xl hover:bg-mahogany-800 transition-colors duration-300 reveal group" style="transition-delay: 200ms;">
+                    <div class="w-14 h-14 bg-mahogany-900/50 rounded-2xl flex items-center justify-center mb-6 border border-mahogany-700 group-hover:border-gold transition-colors">
+                        <i data-lucide="leaf" class="w-7 h-7 text-gold"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">Chemical-Free Diet</h4>
+                    <p class="text-sm text-mahogany-100/80 leading-relaxed">Raised on organic Fermented Plant Juice (FPJ) and Oriental Herbal Nutrients (OHN) for naturally fortified outputs.</p>
+                </div>
+
+                <div class="bg-mahogany-800/40 border border-mahogany-700/50 backdrop-blur-sm p-8 rounded-3xl hover:bg-mahogany-800 transition-colors duration-300 reveal group" style="transition-delay: 300ms;">
+                    <div class="w-14 h-14 bg-mahogany-900/50 rounded-2xl flex items-center justify-center mb-6 border border-mahogany-700 group-hover:border-gold transition-colors">
+                        <i data-lucide="activity" class="w-7 h-7 text-gold"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">Data-Driven Farming</h4>
+                    <p class="text-sm text-mahogany-100/80 leading-relaxed">Every egg laid and every gram of feed is meticulously tracked via our custom Excel Farm OS to guarantee quality.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Radical Transparency Gallery -->
+    <section id="gallery" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 reveal">
+                <div class="max-w-2xl">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="h-[2px] w-12 bg-gold"></span>
+                        <h2 class="text-mahogany-700 font-bold tracking-widest uppercase text-xs">Proof of Work</h2>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">Radical Transparency</h2>
+                    <p class="text-gray-600 text-lg font-light">Take a look inside our actual Solana operations. No stock photos—just healthy flocks and clean facilities.</p>
+                </div>
+            </div>
+
+            <!-- Bento Grid Gallery -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[200px] reveal">
+                <!-- Large Feature Image -->
+                <div class="col-span-2 row-span-2 relative group overflow-hidden rounded-3xl shadow-md cursor-pointer">
+                    <img src="IMG_5950.HEIC" onerror="this.src='https://images.unsplash.com/photo-1516467508483-a7212febe31a?q=80&w=800&auto=format&fit=crop'" alt="LCPF Farm Operations" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-mahogany-900/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-8">
+                        <div>
+                            <p class="text-white font-serif font-bold text-2xl">Our Growing Flock</p>
+                            <p class="text-goldlight text-sm">Vigorous & Disease Resistant</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Grid Items -->
+                <div class="relative group overflow-hidden rounded-3xl shadow-sm cursor-pointer">
+                    <img src="IMG_4846.HEIC" onerror="this.src='https://images.unsplash.com/photo-1560284483-37604391ab1a?q=80&w=400&auto=format&fit=crop'" alt="LCPF Details" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+                        <i data-lucide="zoom-in" class="text-white w-8 h-8"></i>
+                    </div>
+                </div>
+                
+                <div class="relative group overflow-hidden rounded-3xl shadow-sm cursor-pointer">
+                    <img src="IMG_4543.HEIC" onerror="this.src='https://images.unsplash.com/photo-1522277800024-9b21ea2fdd2b?q=80&w=400&auto=format&fit=crop'" alt="LCPF Details" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+                        <i data-lucide="zoom-in" class="text-white w-8 h-8"></i>
+                    </div>
+                </div>
+                
+                <div class="relative group overflow-hidden rounded-3xl shadow-sm cursor-pointer">
+                    <img src="IMG_4434.HEIC" onerror="this.src='https://images.unsplash.com/photo-1598114406184-25e24340798e?q=80&w=400&auto=format&fit=crop'" alt="LCPF Facilities" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+                        <i data-lucide="zoom-in" class="text-white w-8 h-8"></i>
+                    </div>
+                </div>
+                
+                <div class="relative group overflow-hidden rounded-3xl shadow-sm cursor-pointer">
+                    <img src="IMG_4430.HEIC" onerror="this.src='https://images.unsplash.com/photo-1550508544-77a83d7a8d8e?q=80&w=400&auto=format&fit=crop'" alt="LCPF Daily Operations" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+                        <i data-lucide="zoom-in" class="text-white w-8 h-8"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Menu -->
+    <section id="products" class="py-24 bg-eggshell">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <span class="text-mahogany-700 font-bold tracking-widest uppercase text-xs mb-2 block">Our Yield</span>
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">Premium Offerings</h2>
+                <p class="text-gray-600 text-lg font-light max-w-2xl mx-auto">Direct from our biosecure farm to your family's table or backyard flock.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Eggs (IMG_4416.PNG) -->
+                <div class="bg-white rounded-[2rem] overflow-hidden shadow-lg shadow-gray-200/50 hover:shadow-2xl hover:shadow-mahogany-500/10 transition-all duration-300 group reveal">
+                    <div class="h-64 bg-gray-100 relative overflow-hidden">
+                        <img src="IMG_4416.PNG" onerror="this.src='https://images.unsplash.com/photo-1598965675045-45c5e72c7d05?q=80&w=800&auto=format&fit=crop'" alt="Premium Brown Eggs" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                        <div class="absolute top-5 right-5 bg-gold text-mahogany-900 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider shadow-md backdrop-blur-sm">Best Seller</div>
+                    </div>
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-2xl font-serif font-bold text-gray-900 group-hover:text-mahogany-700 transition-colors">Premium Brown Eggs</h3>
+                        </div>
+                        <div class="mb-4">
+                            <span class="text-3xl font-black text-mahogany-900">₱360</span>
+                            <span class="text-gray-500 text-sm font-medium">/ tray (30 pcs)</span>
+                        </div>
+                        <p class="text-gray-600 mb-8 text-sm leading-relaxed font-light">Richer yolks, thicker shells, packed with Omega-3s. Only ₱12/egg. Raised chemical-free on herbal nutrients.</p>
+                        <a href="#order" onclick="selectProduct('Premium Brown Eggs (Tray)')" class="block w-full py-4 px-4 bg-gray-50 hover:bg-mahogany-900 text-mahogany-900 hover:text-white text-center font-semibold rounded-2xl transition-all duration-300 border border-gray-100 hover:border-transparent">Select & Order</a>
+                    </div>
+                </div>
+
+                <!-- Chicks (IMG_6014.HEIC) -->
+                <div class="bg-white rounded-[2rem] overflow-hidden shadow-lg shadow-gray-200/50 hover:shadow-2xl hover:shadow-mahogany-500/10 transition-all duration-300 group reveal" style="transition-delay: 100ms;">
+                    <div class="h-64 bg-gray-100 relative overflow-hidden">
+                        <img src="IMG_6014.HEIC" onerror="this.src='https://images.unsplash.com/photo-1600868856087-9d7a22839b2b?q=80&w=800&auto=format&fit=crop'" alt="Pure RIR Chicks" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                    </div>
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-2xl font-serif font-bold text-gray-900 group-hover:text-mahogany-700 transition-colors">Pure RIR Chicks</h3>
+                        </div>
+                        <div class="mb-4">
+                            <span class="text-3xl font-black text-mahogany-900">₱100</span>
+                            <span class="text-gray-500 text-sm font-medium">/ head (Day-old)</span>
+                        </div>
+                        <p class="text-gray-600 mb-8 text-sm leading-relaxed font-light">Fully B1B1 vaccinated. The perfect, vigorous Dark Mahogany foundation for your own backyard multiplier farm.</p>
+                        <a href="#order" onclick="selectProduct('Pure RIR Chicks')" class="block w-full py-4 px-4 bg-gray-50 hover:bg-mahogany-900 text-mahogany-900 hover:text-white text-center font-semibold rounded-2xl transition-all duration-300 border border-gray-100 hover:border-transparent">Select & Order</a>
+                    </div>
+                </div>
+
+                <!-- Roosters (IMG_5981.HEIC) -->
+                <div class="bg-white rounded-[2rem] overflow-hidden shadow-lg shadow-gray-200/50 hover:shadow-2xl hover:shadow-mahogany-500/10 transition-all duration-300 group reveal" style="transition-delay: 200ms;">
+                    <div class="h-64 bg-gray-100 relative overflow-hidden">
+                        <img src="IMG_5981.HEIC" onerror="this.src='https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?q=80&w=800&auto=format&fit=crop'" alt="RIR Rooster" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                    </div>
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-2xl font-serif font-bold text-gray-900 group-hover:text-mahogany-700 transition-colors">Breeding Roosters</h3>
+                        </div>
+                        <div class="mb-4">
+                            <span class="text-3xl font-black text-mahogany-900">₱549</span>
+                            <span class="text-gray-500 text-sm font-medium">/ up</span>
+                        </div>
+                        <p class="text-gray-600 mb-8 text-sm leading-relaxed font-light">4-10 months old. Upgrade your flock's genetics instantly with our dominant, highly fertile Dark Mahogany males.</p>
+                        <a href="#order" onclick="selectProduct('Premium Breeding Rooster')" class="block w-full py-4 px-4 bg-gray-50 hover:bg-mahogany-900 text-mahogany-900 hover:text-white text-center font-semibold rounded-2xl transition-all duration-300 border border-gray-100 hover:border-transparent">Select & Order</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Frequently Asked Questions (Accordion Style) -->
+    <section id="faq" class="py-24 bg-white border-b border-gray-100">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <span class="text-mahogany-700 font-bold tracking-widest uppercase text-xs mb-2 block">Clearing Doubts</span>
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
+                <p class="text-gray-600 text-lg font-light">Everything you need to know about our premium operations.</p>
+            </div>
+
+            <div class="space-y-4 reveal">
+                <!-- FAQ Item 1 -->
+                <div class="border border-gray-200 rounded-2xl overflow-hidden transition-all duration-300 bg-eggshell">
+                    <button class="faq-button w-full text-left px-6 py-5 focus:outline-none flex justify-between items-center bg-white hover:bg-gray-50 transition-colors">
+                        <span class="font-bold text-gray-900 pr-4">Why do you have a strict "No Walk-in" policy?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-gold transform transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                        <div class="p-6 pt-2 text-gray-600 font-light leading-relaxed">
+                            To guarantee the absolute purity and health of our flock, we strictly enforce biosecurity measures. Walk-ins can accidentally introduce pathogens like Avian Influenza or Newcastle Disease. By meeting you at designated pick-up points, we protect the premium chickens and eggs you are purchasing.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="border border-gray-200 rounded-2xl overflow-hidden transition-all duration-300 bg-eggshell">
+                    <button class="faq-button w-full text-left px-6 py-5 focus:outline-none flex justify-between items-center bg-white hover:bg-gray-50 transition-colors">
+                        <span class="font-bold text-gray-900 pr-4">What makes your eggs worth ₱360 per tray?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-gold transform transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                        <div class="p-6 pt-2 text-gray-600 font-light leading-relaxed">
+                            Commercial white eggs are mass-produced in cramped cages. Our Rhode Island Reds are free-ranging and fed a highly specialized diet supplemented with Fermented Plant Juice (FPJ) and Oriental Herbal Nutrients (OHN). This results in significantly thicker shells, much richer and darker yolks (packed with Omega-3s), and zero chemical aftertaste.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="border border-gray-200 rounded-2xl overflow-hidden transition-all duration-300 bg-eggshell">
+                    <button class="faq-button w-full text-left px-6 py-5 focus:outline-none flex justify-between items-center bg-white hover:bg-gray-50 transition-colors">
+                        <span class="font-bold text-gray-900 pr-4">Do you use antibiotics or growth hormones?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-gold transform transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                        <div class="p-6 pt-2 text-gray-600 font-light leading-relaxed">
+                            Absolutely not. We align strictly with GAHP. Our flock's immune systems are naturally fortified through stress-free environments and herbal concoctions. We only use mandatory, DA-approved preventive vaccines (like B1B1 for chicks) to ensure baseline immunity, never daily antibiotics or synthetic growth promoters.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Smart Order Form Section -->
+    <section id="order" class="py-24 bg-mahogany-900 relative overflow-hidden">
+        <!-- Abstract glowing orbs -->
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-mahogany-700 mix-blend-screen filter blur-3xl opacity-50 animate-blob"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-72 h-72 rounded-full bg-gold mix-blend-screen filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+        
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-white mb-4">Secure Your Premium Batch</h2>
+                <p class="text-mahogany-100 text-lg font-light">Direct WhatsApp routing. No middle-men. 100% Farm-to-Table.</p>
+            </div>
+
+            <div class="bg-white rounded-[2.5rem] shadow-2xl overflow-hidden reveal">
+                <div class="grid md:grid-cols-5 h-full">
+                    
+                    <!-- Left Info Side -->
+                    <div class="bg-eggshell p-10 md:col-span-2 flex flex-col justify-between border-r border-gray-100">
+                        <div>
+                            <h3 class="text-2xl font-serif font-bold text-gray-900 mb-3">Fast & Frictionless</h3>
+                            <p class="text-gray-500 text-sm mb-10 leading-relaxed font-light">
+                                Skip the complex carts. Fill this out and we'll instantly format a message to finalize your delivery and total cost via WhatsApp.
+                            </p>
+                            <div class="space-y-6">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center flex-shrink-0 text-mahogany-700">
+                                        <i data-lucide="map-pin" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-bold text-gray-900 text-sm">Pick-up / Dispatch</p>
+                                        <p class="text-gray-500 text-sm">Centro Northeast, Solana</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center flex-shrink-0 text-mahogany-700">
+                                        <i data-lucide="phone" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-bold text-gray-900 text-sm">Direct Line</p>
+                                        <p class="text-gray-500 text-sm">0976 004 4255</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-12 pt-8 border-t border-gray-200">
+                            <p class="text-sm text-mahogany-700 font-serif italic font-bold">"Laking alaga, laking malusog."</p>
+                        </div>
+                    </div>
+
+                    <!-- Right Form Side -->
+                    <div class="p-10 md:col-span-3 bg-white">
+                        <form id="lcpf-order-form" class="space-y-6 h-full flex flex-col justify-center">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-900 mb-2">Full Name</label>
+                                <input type="text" id="customerName" required class="w-full px-5 py-3.5 bg-gray-50 rounded-xl border border-gray-200 focus:border-gold focus:ring-2 focus:ring-gold/20 focus:bg-white outline-none transition-all duration-300" placeholder="e.g. Juan Dela Cruz">
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-5">
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-900 mb-2">Product</label>
+                                    <select id="productType" class="w-full px-5 py-3.5 bg-gray-50 rounded-xl border border-gray-200 focus:border-gold focus:ring-2 focus:ring-gold/20 focus:bg-white outline-none transition-all duration-300 appearance-none">
+                                        <option value="Premium Brown Eggs (Tray)">Premium Brown Eggs</option>
+                                        <option value="Pure RIR Chicks">Pure RIR Chicks</option>
+                                        <option value="Premium Breeding Rooster">Breeding Rooster</option>
+                                        <option value="Organic CRH Fertilizer">CRH Fertilizer</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-900 mb-2">Quantity</label>
+                                    <input type="number" id="quantity" min="1" value="1" required class="w-full px-5 py-3.5 bg-gray-50 rounded-xl border border-gray-200 focus:border-gold focus:ring-2 focus:ring-gold/20 focus:bg-white outline-none transition-all duration-300">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-bold text-gray-900 mb-2">Delivery/Meet-up Location</label>
+                                <input type="text" id="address" required class="w-full px-5 py-3.5 bg-gray-50 rounded-xl border border-gray-200 focus:border-gold focus:ring-2 focus:ring-gold/20 focus:bg-white outline-none transition-all duration-300" placeholder="Solana, Tuguegarao, or specific landmark">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-bold text-gray-900 mb-2">Payment Method</label>
+                                <select id="payment" class="w-full px-5 py-3.5 bg-gray-50 rounded-xl border border-gray-200 focus:border-gold focus:ring-2 focus:ring-gold/20 focus:bg-white outline-none transition-all duration-300 appearance-none">
+                                    <option value="Cash on Delivery (COD)">Cash on Delivery (COD)</option>
+                                    <option value="GCash">GCash</option>
+                                </select>
+                            </div>
+
+                            <button type="button" onclick="submitOrder()" class="w-full bg-mahogany-900 hover:bg-mahogany-700 text-white font-bold py-4 rounded-xl mt-4 flex items-center justify-center gap-3 transition-all duration-300 shadow-[0_10px_20px_rgba(90,25,25,0.2)] hover:shadow-[0_15px_25px_rgba(90,25,25,0.3)] transform hover:-translate-y-1">
+                                <i data-lucide="send" class="w-5 h-5 text-gold"></i>
+                                Request via WhatsApp
+                            </button>
+                            <p class="text-xs text-center text-gray-400 mt-2 flex items-center justify-center gap-1.5 font-light">
+                                <i data-lucide="lock" class="w-3.5 h-3.5"></i> Data routed securely to our farm mobile.
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-950 text-gray-400 py-16 border-t border-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-4 gap-10 items-start">
+            <div class="col-span-2">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-8 h-8 bg-mahogany-900 rounded-full flex items-center justify-center">
+                        <i data-lucide="egg" class="h-4 w-4 text-gold"></i>
+                    </div>
+                    <span class="font-serif font-bold text-xl text-white tracking-wider">LEGAL CHICKS</span>
+                </div>
+                <p class="text-sm max-w-sm leading-relaxed mb-8 font-light">From One Coop to a Community. Engineering the finest Rhode Island Reds in the Cagayan Valley through precision, biosecurity, and natural farming methods.</p>
+                <div class="flex gap-3">
+                    <a href="https://facebook.com/LegalChicksPoultryFarm" target="_blank" class="w-10 h-10 rounded-full bg-gray-900 border border-gray-800 flex items-center justify-center hover:bg-gold hover:text-mahogany-900 hover:border-gold transition-all duration-300">
+                        <i data-lucide="facebook" class="w-4 h-4"></i>
+                    </a>
+                    <a href="tel:09760044255" class="w-10 h-10 rounded-full bg-gray-900 border border-gray-800 flex items-center justify-center hover:bg-gold hover:text-mahogany-900 hover:border-gold transition-all duration-300">
+                        <i data-lucide="phone" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="text-white font-bold mb-6 tracking-wide text-sm uppercase">Farm Details</h4>
+                <ul class="space-y-3 text-sm font-light">
+                    <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-mahogany-500"></i>Centro Northeast, Solana</li>
+                    <li class="flex items-center gap-2"><i data-lucide="map" class="w-4 h-4 text-mahogany-500"></i>Cagayan Valley (Region II)</li>
+                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-mahogany-500"></i>RSBSA Registered</li>
+                    <li class="flex items-center gap-2"><i data-lucide="file-text" class="w-4 h-4 text-mahogany-500"></i>DTI: Act 3883 Compliant</li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white font-bold mb-6 tracking-wide text-sm uppercase">Quick Links</h4>
+                <ul class="space-y-3 text-sm font-light">
+                    <li><a href="#about" class="hover:text-gold transition-colors duration-200">Our Story</a></li>
+                    <li><a href="#gallery" class="hover:text-gold transition-colors duration-200">Proof of Work</a></li>
+                    <li><a href="#faq" class="hover:text-gold transition-colors duration-200">FAQs</a></li>
+                    <li><a href="#products" class="hover:text-gold transition-colors duration-200">Premium Pricing</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 pt-8 border-t border-gray-900 text-xs font-light flex flex-col md:flex-row justify-between items-center gap-4">
+            <p>&copy; 2026 Legal Chicks Poultry Farm (LCPF). Engineered with Precision.</p>
+            <p class="text-mahogany-500 font-semibold flex items-center gap-1.5 bg-mahogany-900/20 px-3 py-1.5 rounded-full border border-mahogany-900/50">
+                <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i> Strict No Walk-In Policy Enforced
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            const brand = document.getElementById('nav-brand');
+            const links = document.querySelectorAll('.nav-link');
+            
+            if (window.scrollY > 50) {
+                nav.classList.add('glass-nav', 'shadow-sm', 'py-1');
+                nav.classList.remove('bg-transparent', 'border-transparent');
+                brand.classList.remove('text-white');
+                brand.classList.add('text-mahogany-900');
+                links.forEach(link => {
+                    link.classList.remove('text-gray-200');
+                    link.classList.add('text-gray-600');
+                });
+            } else {
+                nav.classList.remove('glass-nav', 'shadow-sm', 'py-1');
+                nav.classList.add('bg-transparent', 'border-transparent');
+                brand.classList.add('text-white');
+                brand.classList.remove('text-mahogany-900');
+                links.forEach(link => {
+                    link.classList.add('text-gray-200');
+                    link.classList.remove('text-gray-600');
+                });
+            }
+        });
+
+        // Intersection Observer for Reveal Animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); // Only animate once
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach((elem) => {
+            observer.observe(elem);
+        });
+
+        // FAQ Accordion Logic
+        const faqButtons = document.querySelectorAll('.faq-button');
+        faqButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                // Lucide replaces <i> with <svg>, so we query for svg
+                const icon = button.querySelector('svg');
+                
+                // Toggle current
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                    if (icon) icon.classList.remove('rotate-180');
+                } else {
+                    // Close all others
+                    document.querySelectorAll('.faq-content').forEach(c => c.style.maxHeight = null);
+                    document.querySelectorAll('.faq-button svg').forEach(svg => svg.classList.remove('rotate-180'));
+                    
+                    // Open current
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    if (icon) icon.classList.add('rotate-180');
+                }
+            });
+        });
+
+        // Order Selection
+        function selectProduct(productName) {
+            document.getElementById('productType').value = productName;
+            document.getElementById('productType').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Add a brief highlight effect to the input
+            const select = document.getElementById('productType');
+            select.classList.add('ring-2', 'ring-gold');
+            setTimeout(() => select.classList.remove('ring-2', 'ring-gold'), 1000);
+        }
+
+        // WhatsApp Order Logic
+        function submitOrder() {
+            const name = document.getElementById('customerName').value;
+            const product = document.getElementById('productType').value;
+            const qty = document.getElementById('quantity').value;
+            const address = document.getElementById('address').value;
+            const payment = document.getElementById('payment').value;
+
+            if(!name || !address) {
+                alert("Please fill in your Name and Address to proceed.");
+                return;
+            }
+
+            const message = `Hello Legal Chicks! 🐓🌾\n\nI am placing a premium order via your website:\n\n👤 *Name:* ${name}\n📦 *Product:* ${product}\n🔢 *Quantity:* ${qty}\n📍 *Delivery/Meet-up:* ${address}\n💳 *Payment Method:* ${payment}\n\nPlease confirm availability and total price. Thank you!`;
+            
+            const whatsappUrl = `https://wa.me/639760044255?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+    </script>
+</body>
+</html>
+
+
+```

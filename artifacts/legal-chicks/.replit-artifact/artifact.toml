@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Legal Chicks Poultry Farm"
+version = "1.0.0"
+id = "artifacts/legal-chicks"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21309
+
+[services.development]
+run = "pnpm --filter @workspace/legal-chicks run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/legal-chicks", "run", "build" ]
+publicDir = "artifacts/legal-chicks/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21309"
+BASE_PATH = "/"
