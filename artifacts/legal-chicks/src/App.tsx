@@ -16,7 +16,6 @@ import img14 from "@assets/a5b9e15cae9bde87323869ad3f23cf1bbb4e3987_178283232523
 import img15 from "@assets/9771af34-1ded-4eb6-ba4b-174681d1a6b0_1782832325234.jpg";
 import img16 from "@assets/1971a8f8-7231-4875-a04c-b90c96096e1a_1782832325232.jpg";
 import img17 from "@assets/7013eab1-27ec-416c-847c-856a80d2f874_1782832325234.jpg";
-import img18 from "@assets/bf1c37e2-5cb0-4694-a64a-0c1712668087_1782832325237.jpg";
 import img19 from "@assets/d5pbEqGBFLFzFD_KLDofINMBavt1BFKGFPtudHmrOqxTL7bU23SplYmD9SBvr9_1782832325238.jpg";
 import { motion, AnimatePresence } from "framer-motion";
 import { useForm } from "react-hook-form";
@@ -584,7 +583,6 @@ function Gallery() {
     { src: img15, label: "Brooder — Warm & Safe",           gridClass: "col-span-1" },
     { src: img16, label: "Chicks Under Heat Lamp",          gridClass: "col-span-1" },
     { src: img17, label: "Roosters in Secure Pen",          gridClass: "col-span-1" },
-    { src: img18, label: "Tagged Breeding Stock",           gridClass: "col-span-1" },
     { src: img19, label: "Heritage Black Flock",            gridClass: "col-span-1" },
   ];
 
