@@ -460,7 +460,7 @@ function Products() {
       desc: "Richer, darker yolks packed with Omega-3 fatty acids. Thicker shells that last longer. Raised chemical-free on herbal nutrients. The difference is visible from the first crack.",
       bullets: ["Visibly Richer Yolk Color", "Superior Shell Thickness", "Zero Chemical Residue", "Higher Omega-3 Content", "GAHP Certified Production"],
       cta: "Order a Tray",
-      link: "https://wa.me/639760044255?text=Hi!%20I%27d%20like%20to%20order%20Premium%20Brown%20Eggs"
+      link: "https://wa.me/639369671213?text=Hi!%20I%27d%20like%20to%20order%20Premium%20Brown%20Eggs"
     },
     {
       title: "Pure RIR Day-Old Chicks",
@@ -469,7 +469,7 @@ function Products() {
       desc: "Fully B1B1 vaccinated before delivery. The perfect foundation for your own backyard multiplier farm. Dark Mahogany genetics mean superior disease resistance and productivity from day one.",
       bullets: ["B1B1 Vaccinated", "Dark Mahogany Bloodline", "High Disease Resistance", "Superior Production Genetics", "Expert After-Sales Support"],
       cta: "Order Chicks",
-      link: "https://wa.me/639760044255?text=Hi!%20I%27d%20like%20to%20order%20Pure%20RIR%20Day-Old%20Chicks"
+      link: "https://wa.me/639369671213?text=Hi!%20I%27d%20like%20to%20order%20Pure%20RIR%20Day-Old%20Chicks"
     },
     {
       title: "Premium Breeding Roosters",
@@ -478,7 +478,7 @@ function Products() {
       desc: "Upgrade your entire flock's genetics in a single season. Our dominant, highly fertile Dark Mahogany roosters are proven performers. One LCPF rooster transforms your breeding outcomes.",
       bullets: ["Proven Genetic Dominance", "High Fertility Rate", "4–10 Months Age Options", "Health-Certified", "Immediate Impact on Flock Quality"],
       cta: "Inquire on Roosters",
-      link: "https://wa.me/639760044255?text=Hi!%20I%27d%20like%20to%20inquire%20about%20Breeding%20Roosters"
+      link: "https://wa.me/639369671213?text=Hi!%20I%27d%20like%20to%20inquire%20about%20Breeding%20Roosters"
     },
     {
       title: "Organic CRH Fertilizer",
@@ -487,7 +487,7 @@ function Products() {
       desc: "Premium eco-friendly soil amendment created from farm by-products. Improves soil aeration, water retention, and microbial activity for your crops and garden.",
       bullets: ["100% Organic By-product", "Improves Soil Aeration", "Enhances Water Retention", "Promotes Beneficial Microbes", "Zero Chemical Additives"],
       cta: "Inquire on Fertilizer",
-      link: "https://wa.me/639760044255?text=Hi!%20I%27d%20like%20to%20inquire%20about%20CRH%20Fertilizer"
+      link: "https://wa.me/639369671213?text=Hi!%20I%27d%20like%20to%20inquire%20about%20CRH%20Fertilizer"
     }
   ];
 
@@ -691,7 +691,7 @@ function Contact() {
   function onSubmit(values: OrderFormValues) {
     const text = `Hi Legal Chicks! I'd like to place an order/inquiry:\n\n*Name:* ${values.fullName}\n*Product:* ${values.product}\n*Quantity:* ${values.quantity}\n*Location/Notes:* ${values.location}\n*Message:* ${values.message || "N/A"}`;
     const encoded = encodeURIComponent(text);
-    window.open(`https://wa.me/639760044255?text=${encoded}`, '_blank');
+    window.open(`https://wa.me/639369671213?text=${encoded}`, '_blank');
   }
 
   return (
@@ -704,7 +704,7 @@ function Contact() {
             <p className="text-xl text-secondary mb-12 font-light italic">Direct. No middlemen. 100% Farm-to-Table.</p>
 
             <div className="space-y-8">
-              <a href="https://wa.me/639760044255" target="_blank" rel="noopener noreferrer" className="flex items-start gap-5 group p-4 -ml-4 rounded-2xl hover:bg-white/5 transition-colors">
+              <a href="https://wa.me/639369671213" target="_blank" rel="noopener noreferrer" className="flex items-start gap-5 group p-4 -ml-4 rounded-2xl hover:bg-white/5 transition-colors">
                 <div className="bg-secondary text-primary p-4 rounded-full group-hover:scale-110 transition-transform shadow-lg shadow-secondary/20">
                   <MessageCircle className="w-8 h-8" />
                 </div>
@@ -905,7 +905,7 @@ export default function App() {
 
       {/* Floating WhatsApp Button */}
       <a 
-        href="https://wa.me/639760044255" 
+        href="https://wa.me/639369671213" 
         target="_blank" 
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform flex items-center justify-center group"
