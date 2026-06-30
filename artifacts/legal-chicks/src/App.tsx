@@ -17,6 +17,7 @@ import img15 from "@assets/9771af34-1ded-4eb6-ba4b-174681d1a6b0_1782832325234.jp
 import img16 from "@assets/1971a8f8-7231-4875-a04c-b90c96096e1a_1782832325232.jpg";
 import img17 from "@assets/7013eab1-27ec-416c-847c-856a80d2f874_1782832325234.jpg";
 import img19 from "@assets/d5pbEqGBFLFzFD_KLDofINMBavt1BFKGFPtudHmrOqxTL7bU23SplYmD9SBvr9_1782832325238.jpg";
+import farmLogo from "@assets/Legal_Chicks_Farm_Logo_1782840193981.png";
 import { motion, AnimatePresence } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -84,7 +85,7 @@ function Navbar() {
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-background/95 backdrop-blur-md shadow-sm border-b border-border/50 py-3" : "bg-transparent py-5"}`}>
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
         <a href="#" className={`flex items-center gap-3 font-serif text-2xl font-bold tracking-tight ${isScrolled ? "text-primary" : "text-white"}`}>
-          <img src={img7} alt="Legal Chicks Logo" className="w-9 h-9 rounded-full object-cover border-2 border-secondary" />
+          <img src={farmLogo} alt="Legal Chicks Poultry Farm Logo" className="w-10 h-10 object-contain" />
           LEGAL CHICKS
         </a>
 
