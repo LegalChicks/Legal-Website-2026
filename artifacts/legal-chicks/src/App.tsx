@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from "react";
-import vid1 from "@assets/IMG_6014_1782536088478.mov";
-import vid2 from "@assets/IMG_6012_1782536088478.mov";
-import vid3 from "@assets/IMG_6013_1782536088478.mov";
-import vid4 from "@assets/gemini_generated_video_9FCDD83F_1782536088478.mp4";
-import vid5 from "@assets/IMG_5979_1782536122763.mov";
-import vid6 from "@assets/IMG_5980_1782536122763.mov";
-import vid7 from "@assets/IMG_5981_1782536122763.mov";
+import img1 from "@assets/40b2c192-91cc-43b3-a351-eb3ffea7f2f8_1782832325228.jpg";
+import img2 from "@assets/0fa9fbb4-9794-4dba-86a6-86594d1b8f53_1782832325224.jpg";
+import img3 from "@assets/6da2d5e3-0616-4100-8117-fa7751001151_1782832325225.jpg";
+import img4 from "@assets/9a7a2840-a28f-4b38-accc-9b594c9de93d_1782832325227.jpg";
+import img5 from "@assets/de8c6c60-7f97-45c6-8ff3-e2c01c003148_1782832325240.jpg";
+import img6 from "@assets/3164fd7e-7d0a-4cb3-9b22-3506486c1474_1782832325233.jpg";
+import img7 from "@assets/20216283-c12e-4e2e-8895-fdfb1b507e8b_1782832325235.jpg";
+import img8 from "@assets/00eaac43-8082-44ae-acea-2cc22fe8d3e5_1782832325223.jpg";
+import img9 from "@assets/92bfc8ee7053481f5eca46085808dfbb0076cadf_1782832325231.png";
+import img10 from "@assets/6fc3de17acfa4c65952b64d77058dc6d7ecc1d96_1782832325226.png";
+import img11 from "@assets/57d11aac2ec5435054b8fd17f3ccb1f6c1fbbab2_1782832325229.png";
+import img12 from "@assets/55cbcdc465354cb00de0e076af7efb40c9b952f1_1782832325229.png";
+import img13 from "@assets/88c989f6-266f-4777-8992-eb323696fb91_1782832325230.jpg";
+import img14 from "@assets/a5b9e15cae9bde87323869ad3f23cf1bbb4e3987_1782832325236.png";
+import img15 from "@assets/9771af34-1ded-4eb6-ba4b-174681d1a6b0_1782832325234.jpg";
+import img16 from "@assets/1971a8f8-7231-4875-a04c-b90c96096e1a_1782832325232.jpg";
+import img17 from "@assets/7013eab1-27ec-416c-847c-856a80d2f874_1782832325234.jpg";
+import img18 from "@assets/bf1c37e2-5cb0-4694-a64a-0c1712668087_1782832325237.jpg";
+import img19 from "@assets/d5pbEqGBFLFzFD_KLDofINMBavt1BFKGFPtudHmrOqxTL7bU23SplYmD9SBvr9_1782832325238.jpg";
 import { motion, AnimatePresence } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -554,14 +566,26 @@ function Products() {
 }
 
 function Gallery() {
-  const videos = [
-    { src: vid1, label: "Our Healthy Flock", gridClass: "col-span-1 sm:col-span-2 row-span-2" },
-    { src: vid2, label: "Coop Facilities", gridClass: "col-span-1" },
-    { src: vid3, label: "Daily Farm Operations", gridClass: "col-span-1" },
-    { src: vid4, label: "LCPF Farm Showcase", gridClass: "col-span-1" },
-    { src: vid5, label: "Flock in Action", gridClass: "col-span-1" },
-    { src: vid6, label: "Breeding Stock", gridClass: "col-span-1" },
-    { src: vid7, label: "Dark Mahogany Roosters", gridClass: "col-span-1" },
+  const photos = [
+    { src: img1,  label: "Our Growing Flock",               gridClass: "col-span-2 row-span-2" },
+    { src: img2,  label: "Flock Feeding Time",              gridClass: "col-span-1" },
+    { src: img3,  label: "Dark Mahogany Roosters",          gridClass: "col-span-1" },
+    { src: img4,  label: "Biosecure Coop Exterior",         gridClass: "col-span-1" },
+    { src: img5,  label: "Fresh Egg Harvest",               gridClass: "col-span-1" },
+    { src: img6,  label: "Breeding Rooster — Free Range",   gridClass: "col-span-1" },
+    { src: img7,  label: "Dark Mahogany Hen",               gridClass: "col-span-1" },
+    { src: img8,  label: "RIR Hens at the Feeder",          gridClass: "col-span-1" },
+    { src: img9,  label: "Mixed Flock — Open Range",        gridClass: "col-span-1" },
+    { src: img10, label: "Hens in Coop",                    gridClass: "col-span-1" },
+    { src: img11, label: "Growing Pullets",                 gridClass: "col-span-1" },
+    { src: img12, label: "Day-Old Chicks in Brooder",       gridClass: "col-span-1" },
+    { src: img13, label: "Fresh Day-Old Chicks",            gridClass: "col-span-1" },
+    { src: img14, label: "RIR Chicks — Ready for Pickup",   gridClass: "col-span-1" },
+    { src: img15, label: "Brooder — Warm & Safe",           gridClass: "col-span-1" },
+    { src: img16, label: "Chicks Under Heat Lamp",          gridClass: "col-span-1" },
+    { src: img17, label: "Roosters in Secure Pen",          gridClass: "col-span-1" },
+    { src: img18, label: "Tagged Breeding Stock",           gridClass: "col-span-1" },
+    { src: img19, label: "Heritage Black Flock",            gridClass: "col-span-1" },
   ];
 
   return (
@@ -574,27 +598,24 @@ function Gallery() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 auto-rows-[220px]">
-          {videos.map((vid, i) => (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 auto-rows-[180px]">
+          {photos.map((photo, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.07 }}
-              className={`relative rounded-2xl overflow-hidden shadow-md group bg-[#1a0808] ${vid.gridClass}`}
+              transition={{ delay: i * 0.04 }}
+              className={`relative rounded-2xl overflow-hidden shadow-md group bg-[#1a0808] ${photo.gridClass}`}
             >
-              <video
-                src={vid.src}
-                autoPlay
-                loop
-                muted
-                playsInline
+              <img
+                src={photo.src}
+                alt={photo.label}
                 className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500" />
-              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
-                <span className="text-white font-medium text-sm md:text-base tracking-wide drop-shadow-md">{vid.label}</span>
+              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500" />
+              <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <span className="text-white font-medium text-xs md:text-sm tracking-wide drop-shadow-md">{photo.label}</span>
               </div>
             </motion.div>
           ))}
