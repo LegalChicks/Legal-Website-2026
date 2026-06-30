@@ -244,7 +244,7 @@ function Story() {
             className="order-2 lg:order-1"
           >
             <div className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl flex items-center justify-center group">
-              <img src={img7} alt="Premium Rhode Island Red" className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700" />
+              <img src={img1} alt="Legal Chicks Poultry Farm flock" className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-500"></div>
               <div className="absolute bottom-6 left-6 z-10">
                 <Badge className="bg-white/10 hover:bg-white/20 text-white border-white/20 px-4 py-2 rounded-xl text-sm font-medium backdrop-blur-sm">
