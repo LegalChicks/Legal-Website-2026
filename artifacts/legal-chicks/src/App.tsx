@@ -480,15 +480,6 @@ function Products() {
       cta: "Inquire on Roosters",
       link: "https://wa.me/639369671213?text=Hi!%20I%27d%20like%20to%20inquire%20about%20Breeding%20Roosters"
     },
-    {
-      title: "Organic CRH Fertilizer",
-      price: "Ask for pricing",
-      unit: "Carbonized Rice Hull",
-      desc: "Premium eco-friendly soil amendment created from farm by-products. Improves soil aeration, water retention, and microbial activity for your crops and garden.",
-      bullets: ["100% Organic By-product", "Improves Soil Aeration", "Enhances Water Retention", "Promotes Beneficial Microbes", "Zero Chemical Additives"],
-      cta: "Inquire on Fertilizer",
-      link: "https://wa.me/639369671213?text=Hi!%20I%27d%20like%20to%20inquire%20about%20CRH%20Fertilizer"
-    }
   ];
 
   return (
@@ -640,10 +631,6 @@ function FAQ() {
       a: "Our primary pick-up point is Centro Northeast, Solana, Cagayan Valley. We can arrange meetups and logistics for clients within the broader Cagayan Valley region. Contact us on WhatsApp to discuss the best delivery arrangement for your order."
     },
     {
-      q: "What is the Carbonized Rice Hull (CRH) fertilizer?",
-      a: "CRH is an organic, eco-friendly soil amendment created from the by-products of our farm operations. It contains zero chemicals, improves soil aeration, enhances water retention, and promotes beneficial microbial activity—perfect for organic gardening."
-    },
-    {
       q: "How do I start my own backyard RIR farm with LCPF stock?",
       a: "The best start is purchasing our B1B1 vaccinated day-old chicks alongside a proven breeding rooster (4-10 months old) to immediately upgrade your flock's genetics. We don't just sell birds; we offer expert after-sales support and community mentorship to ensure your success."
     }
@@ -769,7 +756,7 @@ function Contact() {
                           <SelectItem value="Premium Brown Eggs">Premium Brown Eggs (₱360/tray)</SelectItem>
                           <SelectItem value="Pure RIR Chicks">Pure RIR Day-Old Chicks (₱100/head)</SelectItem>
                           <SelectItem value="Breeding Rooster">Premium Breeding Rooster (₱549+)</SelectItem>
-                          <SelectItem value="CRH Fertilizer">Organic CRH Fertilizer</SelectItem>
+
                         </SelectContent>
                       </Select>
                       <FormMessage />
