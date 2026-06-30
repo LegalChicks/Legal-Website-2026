@@ -83,7 +83,8 @@ function Navbar() {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-background/95 backdrop-blur-md shadow-sm border-b border-border/50 py-3" : "bg-transparent py-5"}`}>
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-        <a href="#" className={`font-serif text-2xl font-bold tracking-tight ${isScrolled ? "text-primary" : "text-white"}`}>
+        <a href="#" className={`flex items-center gap-3 font-serif text-2xl font-bold tracking-tight ${isScrolled ? "text-primary" : "text-white"}`}>
+          <img src={img7} alt="Legal Chicks Logo" className="w-9 h-9 rounded-full object-cover border-2 border-secondary" />
           LEGAL CHICKS
         </a>
 
@@ -147,9 +148,12 @@ function Navbar() {
 
 function Hero() {
   return (
-    <section className="relative min-h-[100dvh] flex items-center justify-center pt-20 overflow-hidden bg-primary text-white">
+    <section 
+      className="relative min-h-[100dvh] flex items-center justify-center pt-20 overflow-hidden bg-primary text-white bg-cover bg-center"
+      style={{ backgroundImage: `url(${img9})` }}
+    >
       {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#3a0d0d] via-[#5a1919] to-[#2a0808] z-0" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#3a0d0d]/95 via-[#5a1919]/80 to-[#2a0808]/90 z-0" />
       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay z-0" />
       
       <div className="container relative z-10 mx-auto px-4 md:px-6 py-12 md:py-24 flex flex-col items-center text-center">
@@ -238,12 +242,13 @@ function Story() {
             transition={{ duration: 0.7 }}
             className="order-2 lg:order-1"
           >
-            <div className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-tr from-[#3a0d0d] to-[#8b2e2e] flex items-center justify-center group">
-              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500"></div>
-              <div className="relative z-10 text-center p-8 border border-white/20 m-6 rounded-2xl backdrop-blur-sm">
-                <h3 className="font-serif text-3xl text-secondary mb-2 italic">Premium</h3>
-                <h2 className="font-sans text-2xl text-white font-bold tracking-widest uppercase">Rhode Island Red</h2>
-                <div className="w-12 h-1 bg-secondary mx-auto mt-6"></div>
+            <div className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl flex items-center justify-center group">
+              <img src={img7} alt="Premium Rhode Island Red" className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700" />
+              <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-500"></div>
+              <div className="absolute bottom-6 left-6 z-10">
+                <Badge className="bg-white/10 hover:bg-white/20 text-white border-white/20 px-4 py-2 rounded-xl text-sm font-medium backdrop-blur-sm">
+                  Est. 2022 — Solana, Cagayan Valley
+                </Badge>
               </div>
             </div>
           </motion.div>
@@ -330,6 +335,7 @@ function Trust() {
 
   return (
     <section id="trust" className="py-24 md:py-32 bg-[#3a0d0d] text-white relative">
+      <div className="absolute inset-0 bg-cover bg-center opacity-[0.08] z-0 mix-blend-overlay" style={{ backgroundImage: `url(${img2})` }} />
       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/diagmonds-light.png')] opacity-5 z-0" />
       <div className="container relative z-10 mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -377,6 +383,22 @@ function Trust() {
 
 function Advantage() {
   return (
+    <>
+      <section 
+        className="relative w-full h-[400px] bg-cover bg-center flex items-center"
+        style={{ backgroundImage: `url(${img6})` }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-[#3a0d0d] via-[#3a0d0d]/80 to-transparent"></div>
+        <div className="container relative z-10 mx-auto px-4 md:px-6">
+          <div className="max-w-2xl">
+            <blockquote className="text-3xl md:text-5xl font-serif text-white font-bold leading-tight mb-6">
+              "Every Dark Mahogany bird is a legacy — raised with precision, built to last."
+            </blockquote>
+            <p className="text-secondary font-medium tracking-wide uppercase">Froilan Dave A. Lingan, Founder — LCPF</p>
+          </div>
+        </div>
+      </section>
+
     <section className="py-24 md:py-32 bg-background">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -458,6 +480,7 @@ function Advantage() {
         </div>
       </div>
     </section>
+    </>
   );
 }
 
@@ -494,8 +517,10 @@ function Products() {
   ];
 
   return (
-    <section id="products" className="py-24 md:py-32 bg-primary/5">
-      <div className="container mx-auto px-4 md:px-6">
+    <section id="products" className="py-24 md:py-32 bg-primary/5 relative">
+      <div className="absolute inset-0 bg-cover bg-fixed bg-center opacity-[0.12] z-0" style={{ backgroundImage: `url(${img5})` }}></div>
+      <div className="absolute inset-0 bg-white/70 z-0"></div>
+      <div className="container relative z-10 mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 font-serif text-primary">
             Premium Offerings — Direct from Farm to You
@@ -701,8 +726,9 @@ function Contact() {
   }
 
   return (
-    <section id="contact" className="py-24 md:py-32 bg-[#3a0d0d] text-white relative border-t-4 border-secondary">
-      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')] opacity-20 z-0" />
+    <section id="contact" className="py-24 md:py-32 bg-[#3a0d0d] text-white relative border-t-4 border-secondary bg-cover bg-center" style={{ backgroundImage: `url(${img1})` }}>
+      <div className="absolute inset-0 bg-[#3a0d0d]/90 z-0" />
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')] opacity-20 mix-blend-overlay z-0" />
       <div className="container relative z-10 mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           <div>
@@ -839,6 +865,48 @@ function Contact() {
   );
 }
 
+function ProofOfQuality() {
+  return (
+    <section className="relative w-full h-[500px] bg-cover bg-fixed bg-center flex items-center justify-center" style={{ backgroundImage: `url(${img5})` }}>
+      <div className="absolute inset-0 bg-black/60 z-0" />
+      <div className="container relative z-10 mx-auto px-4 md:px-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 text-center">
+          <div>
+            <p className="text-4xl md:text-6xl font-bold text-secondary font-serif mb-2">250–300</p>
+            <p className="text-white/90 text-sm md:text-base tracking-wide uppercase">Eggs per hen per year</p>
+          </div>
+          <div>
+            <p className="text-4xl md:text-6xl font-bold text-secondary font-serif mb-2">₱360</p>
+            <p className="text-white/90 text-sm md:text-base tracking-wide uppercase">Per premium tray</p>
+          </div>
+          <div>
+            <p className="text-4xl md:text-6xl font-bold text-secondary font-serif mb-2">100%</p>
+            <p className="text-white/90 text-sm md:text-base tracking-wide uppercase">Chemical-free diet</p>
+          </div>
+          <div>
+            <p className="text-4xl md:text-6xl font-bold text-secondary font-serif mb-2">0</p>
+            <p className="text-white/90 text-sm md:text-base tracking-wide uppercase">Antibiotic use</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ChicksBrooderBanner() {
+  return (
+    <section className="relative w-full h-[350px] bg-cover bg-fixed bg-center flex items-center justify-center text-center" style={{ backgroundImage: `url(${img15})` }}>
+      <div className="absolute inset-0 bg-gradient-to-b from-[#3a0d0d]/80 to-[#2a0808]/90 z-0" />
+      <div className="container relative z-10 mx-auto px-4 md:px-6">
+        <h2 className="text-4xl md:text-5xl font-serif italic text-white font-bold mb-4">"From Day One, Every Chick Matters."</h2>
+        <p className="text-white/80 text-lg md:text-xl font-light max-w-2xl mx-auto">
+          Fully vaccinated, closely monitored, and raised in stress-free brooder environments.
+        </p>
+      </div>
+    </section>
+  );
+}
+
 function Footer() {
   return (
     <footer className="bg-[#2a0808] pt-16 pb-8 text-white/80 border-t border-white/10 relative">
@@ -903,7 +971,9 @@ export default function App() {
         <Trust />
         <Advantage />
         <Products />
+        <ProofOfQuality />
         <Gallery />
+        <ChicksBrooderBanner />
         <FAQ />
         <Contact />
       </main>
