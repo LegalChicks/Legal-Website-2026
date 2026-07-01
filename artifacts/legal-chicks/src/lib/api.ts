@@ -99,6 +99,7 @@ export const api = {
       apiFetch(`/admin/users/${id}`, { method: "DELETE" }),
   },
   records: {
+    listPublic: () => apiFetch<{ records: PoultryRecord[] }>("/records/public"),
     list: () => apiFetch<{ records: PoultryRecord[] }>("/records"),
     create: (data: Partial<PoultryRecord>) =>
       apiFetch<{ record: PoultryRecord }>("/records", {
