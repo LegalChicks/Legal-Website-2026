@@ -1,0 +1,43 @@
+#1 - Member Portal & Poultry Record Logs
+What & Why
+Add a full member portal to the Legal Chicks Poultry Farm web app. This includes a login page for registered members, an admin dashboard for managing all users, and a poultry record log system where each member can freely add and edit their own farm records.
+
+Done looks like
+A /login page with username + password fields and a branded Legal Chicks design
+A hardcoded admin account (username: admin, password: admin) that can:
+Register new member accounts (name, username, password, contact info)
+View the full list of registered members
+Edit any member's profile details
+Delete any member account
+Access all application-wide settings (e.g., farm name, contact, branding toggles)
+Regular member accounts (created by admin) can:
+Log in and see their personal dashboard
+Add new poultry records (flock name/batch, bird type/breed, quantity, age/dates, feed notes, health status, mortality, egg production, weight, and free-form notes)
+Edit any of their own previously saved poultry records
+View a detailed log/table of all their records
+Authentication is session-based (JWT or server session stored in a cookie); protected routes redirect to /login if not authenticated
+Admin is clearly distinguished from regular members in the UI (separate dashboard sections)
+All user and poultry record data is persisted in the PostgreSQL database via Drizzle ORM
+Out of scope
+Password reset / email verification flows
+Members editing other members' records
+File/image uploads for records
+Public-facing changes to the existing landing page (it remains intact)
+Steps
+Database schema — Add users table (id, username, password hash, full name, contact, role: admin/member, created_at) and poultry_records table (id, user_id FK, batch_name, bird_type, breed, quantity, age_weeks, hatch_date, feed_notes, health_status, mortality_count, egg_production, avg_weight_kg, free_notes, created_at, updated_at). Run the migration.
+
+Auth API endpoints — Add POST /api/auth/login, POST /api/auth/logout, and GET /api/auth/me to the Express API. Use bcrypt for password hashing and JWT (stored as an httpOnly cookie) for session tokens. Seed the admin account on server startup if it doesn't exist.
+
+User management API endpoints — Add CRUD routes under /api/admin/users: list all users, create a user, update a user, delete a user. These routes must be protected and restricted to the admin role.
+
+Poultry records API endpoints — Add routes under /api/records: create a record, list records (scoped to the logged-in user), update a record. Protected for authenticated members only.
+
+Frontend routing — Add react-router-dom to the web app. Set up routes: / (existing landing page), /login, /dashboard (member home), /records (poultry log), /admin (admin dashboard). Add an auth context/hook that reads the current user from /api/auth/me and protects private routes.
+
+Login page — Build /login with a branded card (Legal Chicks logo/colors), username + password fields (react-hook-form + zod), error messaging for bad credentials, and redirect to the appropriate dashboard on success.
+
+Member dashboard & poultry records UI — Build the member's /dashboard (greeting, summary stats) and /records page with a full-featured table of all records plus an "Add Record" and "Edit Record" modal/form covering all fields defined in the schema.
+
+Admin dashboard UI — Build /admin with two sections: (a) Members — a table listing all users with Edit and Delete actions, and a form/modal to register a new member; (b) Settings — a simple form for app-wide settings (stored in a settings table or env-backed defaults). Admin sees a clearly labeled admin nav.
+
+Navigation & UX — Add a persistent top navigation for logged-in users showing their name, role badge, and a logout button. Ensure the existing landing page is still accessible publicly at /.
