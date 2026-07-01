@@ -57,6 +57,12 @@ export type PoultryRecord = {
   freeNotes: string | null;
   createdAt: string;
   updatedAt: string;
+  deletedAt: string | null;
+};
+
+export type AdminRecord = PoultryRecord & {
+  memberName: string;
+  memberUsername: string;
 };
 
 export const api = {
@@ -97,6 +103,8 @@ export const api = {
       }),
     deleteUser: (id: number) =>
       apiFetch(`/admin/users/${id}`, { method: "DELETE" }),
+    listAllRecords: () =>
+      apiFetch<{ records: AdminRecord[] }>("/admin/records"),
   },
   records: {
     listPublic: () => apiFetch<{ records: PoultryRecord[] }>("/records/public"),
@@ -111,5 +119,7 @@ export const api = {
         method: "PUT",
         body: JSON.stringify(data),
       }),
+    delete: (id: number) =>
+      apiFetch<{ ok: boolean }>(`/records/${id}`, { method: "DELETE" }),
   },
 };

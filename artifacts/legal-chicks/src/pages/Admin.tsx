@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useAuth } from "@/lib/auth-context";
-import { api, type Member } from "@/lib/api";
+import { api, type Member, type AdminRecord } from "@/lib/api";
 import { useLocation } from "wouter";
 import { AppNav } from "@/components/AppNav";
 import { Button } from "@/components/ui/button";
@@ -41,7 +41,16 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Plus, Pencil, Trash2, Loader2, Users, Settings } from "lucide-react";
+import {
+  Plus,
+  Pencil,
+  Trash2,
+  Loader2,
+  Users,
+  Settings,
+  ClipboardList,
+  EyeOff,
+} from "lucide-react";
 
 const createSchema = z.object({
   username: z.string().min(3, "At least 3 characters"),
@@ -59,17 +68,35 @@ const editSchema = z.object({
 type CreateFormValues = z.infer<typeof createSchema>;
 type EditFormValues = z.infer<typeof editSchema>;
 
+function healthColor(s: string | null) {
+  if (!s) return "bg-muted text-muted-foreground";
+  const l = s.toLowerCase();
+  if (l.includes("healthy")) return "bg-green-100 text-green-700";
+  if (l.includes("sick") || l.includes("quarantined")) return "bg-red-100 text-red-700";
+  if (l.includes("monitoring")) return "bg-amber-100 text-amber-700";
+  return "bg-blue-100 text-blue-700";
+}
+
 export default function Admin() {
   const { user, loading } = useAuth();
   const [, setLocation] = useLocation();
+
+  const [tab, setTab] = useState<"members" | "records" | "settings">("members");
+
+  // Members state
   const [members, setMembers] = useState<Member[]>([]);
-  const [fetching, setFetching] = useState(true);
-  const [tab, setTab] = useState<"members" | "settings">("members");
+  const [membersFetching, setMembersFetching] = useState(true);
   const [createOpen, setCreateOpen] = useState(false);
   const [editTarget, setEditTarget] = useState<Member | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<Member | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [formError, setFormError] = useState("");
+
+  // All records state
+  const [allRecords, setAllRecords] = useState<AdminRecord[]>([]);
+  const [recordsFetching, setRecordsFetching] = useState(true);
+  const [showDeleted, setShowDeleted] = useState(true);
+  const [filterUser, setFilterUser] = useState<string>("all");
 
   useEffect(() => {
     if (!loading && (!user || user.role !== "admin")) setLocation("/login");
@@ -80,11 +107,22 @@ export default function Admin() {
       const { users } = await api.admin.listUsers();
       setMembers(users);
     } catch {}
-    finally { setFetching(false); }
+    finally { setMembersFetching(false); }
+  };
+
+  const loadAllRecords = async () => {
+    try {
+      const { records } = await api.admin.listAllRecords();
+      setAllRecords(records);
+    } catch {}
+    finally { setRecordsFetching(false); }
   };
 
   useEffect(() => {
-    if (user?.role === "admin") loadMembers();
+    if (user?.role === "admin") {
+      loadMembers();
+      loadAllRecords();
+    }
   }, [user]);
 
   const createForm = useForm<CreateFormValues>({
@@ -145,20 +183,33 @@ export default function Admin() {
     return <div className="min-h-screen flex items-center justify-center"><Loader2 className="w-8 h-8 animate-spin text-primary" /></div>;
   }
 
+  // Filter records for display
+  const displayedRecords = allRecords.filter((r) => {
+    const matchUser = filterUser === "all" || String(r.userId) === filterUser;
+    const matchDeleted = showDeleted ? true : !r.deletedAt;
+    return matchUser && matchDeleted;
+  });
+
+  const activeCount = allRecords.filter((r) => !r.deletedAt).length;
+  const deletedCount = allRecords.filter((r) => !!r.deletedAt).length;
+
+  const tabs = [
+    { key: "members", label: "Members", icon: <Users className="w-4 h-4" /> },
+    { key: "records", label: "All Records", icon: <ClipboardList className="w-4 h-4" /> },
+    { key: "settings", label: "Settings", icon: <Settings className="w-4 h-4" /> },
+  ];
+
   return (
     <div className="min-h-screen bg-background">
       <AppNav />
       <main className="pt-20 md:pt-16 pb-16 container mx-auto px-4 md:px-6">
         <div className="pt-8 pb-6">
           <h1 className="text-3xl font-bold text-foreground font-serif">Admin Dashboard</h1>
-          <p className="text-muted-foreground mt-1">Manage members and farm settings.</p>
+          <p className="text-muted-foreground mt-1">Full visibility across all members and records.</p>
         </div>
 
         <div className="flex gap-2 mb-6">
-          {[
-            { key: "members", label: "Members", icon: <Users className="w-4 h-4" /> },
-            { key: "settings", label: "Settings", icon: <Settings className="w-4 h-4" /> },
-          ].map((t) => (
+          {tabs.map((t) => (
             <button
               key={t.key}
               onClick={() => setTab(t.key as typeof tab)}
@@ -173,16 +224,20 @@ export default function Admin() {
           ))}
         </div>
 
+        {/* ── MEMBERS TAB ── */}
         {tab === "members" && (
           <Card className="border-border/50">
             <CardHeader className="pb-4 flex flex-row items-center justify-between">
               <CardTitle className="text-lg">Registered Members</CardTitle>
-              <Button onClick={() => { setCreateOpen(true); setFormError(""); createForm.reset(); }} className="bg-[#3a0d0d] hover:bg-[#5a1919] text-white gap-2">
+              <Button
+                onClick={() => { setCreateOpen(true); setFormError(""); createForm.reset(); }}
+                className="bg-[#3a0d0d] hover:bg-[#5a1919] text-white gap-2"
+              >
                 <Plus className="w-4 h-4" /> Add Member
               </Button>
             </CardHeader>
             <CardContent>
-              {fetching ? (
+              {membersFetching ? (
                 <div className="flex items-center justify-center py-12"><Loader2 className="w-6 h-6 animate-spin text-muted-foreground" /></div>
               ) : (
                 <div className="overflow-x-auto rounded-xl border border-border/50">
@@ -230,6 +285,120 @@ export default function Admin() {
           </Card>
         )}
 
+        {/* ── ALL RECORDS TAB ── */}
+        {tab === "records" && (
+          <Card className="border-border/50">
+            <CardHeader className="pb-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <CardTitle className="text-lg">All Member Records</CardTitle>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    <span className="text-green-600 font-medium">{activeCount} active</span>
+                    {deletedCount > 0 && (
+                      <> · <span className="text-red-500 font-medium">{deletedCount} deleted by users</span> (retained for audit)</>
+                    )}
+                  </p>
+                </div>
+                <div className="flex items-center gap-3">
+                  {/* Filter by user */}
+                  <select
+                    value={filterUser}
+                    onChange={(e) => setFilterUser(e.target.value)}
+                    className="text-sm border border-border/60 rounded-lg px-3 py-1.5 bg-background text-foreground"
+                  >
+                    <option value="all">All Members</option>
+                    {members.map((m) => (
+                      <option key={m.id} value={String(m.id)}>{m.fullName}</option>
+                    ))}
+                  </select>
+                  {/* Toggle deleted */}
+                  <button
+                    onClick={() => setShowDeleted(!showDeleted)}
+                    className={`flex items-center gap-2 text-sm px-3 py-1.5 rounded-lg border transition-colors ${
+                      showDeleted
+                        ? "bg-red-50 border-red-200 text-red-700"
+                        : "bg-muted border-border/60 text-muted-foreground"
+                    }`}
+                  >
+                    <EyeOff className="w-3.5 h-3.5" />
+                    {showDeleted ? "Hiding none" : "Show deleted"}
+                  </button>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {recordsFetching ? (
+                <div className="flex items-center justify-center py-12"><Loader2 className="w-6 h-6 animate-spin text-muted-foreground" /></div>
+              ) : displayedRecords.length === 0 ? (
+                <div className="text-center py-12 text-muted-foreground">
+                  <ClipboardList className="w-10 h-10 mx-auto mb-3 opacity-30" />
+                  <p>No records found.</p>
+                </div>
+              ) : (
+                <div className="overflow-x-auto rounded-xl border border-border/50">
+                  <table className="w-full text-sm">
+                    <thead className="bg-[#3a0d0d] text-white">
+                      <tr>
+                        {["Member", "Batch", "Breed", "Qty", "Age", "Health", "Mortality", "Eggs", "Avg Wt", "Logged", "Status"].map((h) => (
+                          <th key={h} className="px-3 py-3 text-left text-xs font-semibold uppercase tracking-wide whitespace-nowrap">{h}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {displayedRecords.map((r, i) => (
+                        <tr
+                          key={r.id}
+                          className={`border-b border-border/30 transition-colors ${
+                            r.deletedAt
+                              ? "bg-red-50/60 opacity-70"
+                              : i % 2 === 0 ? "bg-white hover:bg-muted/20" : "bg-muted/10 hover:bg-muted/30"
+                          }`}
+                        >
+                          <td className="px-3 py-3 whitespace-nowrap">
+                            <div>
+                              <p className="font-medium text-foreground text-xs">{r.memberName}</p>
+                              <p className="text-muted-foreground text-xs font-mono">@{r.memberUsername}</p>
+                            </div>
+                          </td>
+                          <td className="px-3 py-3 font-medium text-foreground whitespace-nowrap">{r.batchName}</td>
+                          <td className="px-3 py-3 text-muted-foreground whitespace-nowrap text-xs">{r.breed || r.birdType || "—"}</td>
+                          <td className="px-3 py-3 text-center">{r.quantity ?? "—"}</td>
+                          <td className="px-3 py-3 text-center text-xs">{r.ageWeeks != null ? `${r.ageWeeks}w` : "—"}</td>
+                          <td className="px-3 py-3">
+                            <Badge className={`text-xs ${healthColor(r.healthStatus)}`}>{r.healthStatus || "—"}</Badge>
+                          </td>
+                          <td className="px-3 py-3 text-center text-red-600 text-xs">{r.mortalityCount ?? 0}</td>
+                          <td className="px-3 py-3 text-center text-xs">{r.eggProduction ?? "—"}</td>
+                          <td className="px-3 py-3 text-center text-xs">{r.avgWeightKg ?? "—"}</td>
+                          <td className="px-3 py-3 text-muted-foreground text-xs whitespace-nowrap">
+                            {new Date(r.createdAt).toLocaleDateString()}
+                          </td>
+                          <td className="px-3 py-3">
+                            {r.deletedAt ? (
+                              <Badge className="bg-red-100 text-red-600 text-xs gap-1">
+                                <EyeOff className="w-3 h-3" /> Deleted
+                              </Badge>
+                            ) : (
+                              <Badge className="bg-green-100 text-green-700 text-xs">Active</Badge>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+              {deletedCount > 0 && (
+                <p className="text-xs text-muted-foreground mt-3 text-center">
+                  <EyeOff className="inline w-3 h-3 mr-1" />
+                  Deleted records are hidden from members but permanently retained here for the admin.
+                </p>
+              )}
+            </CardContent>
+          </Card>
+        )}
+
+        {/* ── SETTINGS TAB ── */}
         {tab === "settings" && (
           <Card className="border-border/50">
             <CardHeader><CardTitle className="text-lg">Farm Settings</CardTitle></CardHeader>

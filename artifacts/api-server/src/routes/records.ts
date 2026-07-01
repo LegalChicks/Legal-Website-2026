@@ -1,11 +1,11 @@
 import { Router } from "express";
 import { db, poultryRecordsTable, usersTable } from "@workspace/db";
-import { eq, and } from "drizzle-orm";
+import { eq, and, isNull } from "drizzle-orm";
 import { requireAuth } from "../lib/auth";
 
 const router = Router();
 
-// Public: return all records posted by the admin user — no auth required
+// Public: admin's records only — no auth required
 router.get("/records/public", async (_req, res) => {
   const [adminUser] = await db
     .select({ id: usersTable.id })
@@ -21,7 +21,12 @@ router.get("/records/public", async (_req, res) => {
   const records = await db
     .select()
     .from(poultryRecordsTable)
-    .where(eq(poultryRecordsTable.userId, adminUser.id))
+    .where(
+      and(
+        eq(poultryRecordsTable.userId, adminUser.id),
+        isNull(poultryRecordsTable.deletedAt),
+      ),
+    )
     .orderBy(poultryRecordsTable.createdAt);
 
   res.json({ records });
@@ -29,16 +34,23 @@ router.get("/records/public", async (_req, res) => {
 
 router.use(requireAuth);
 
+// User: list their own non-deleted records
 router.get("/records", async (req, res) => {
   const userId = req.user!.id;
   const records = await db
     .select()
     .from(poultryRecordsTable)
-    .where(eq(poultryRecordsTable.userId, userId))
+    .where(
+      and(
+        eq(poultryRecordsTable.userId, userId),
+        isNull(poultryRecordsTable.deletedAt),
+      ),
+    )
     .orderBy(poultryRecordsTable.createdAt);
   res.json({ records });
 });
 
+// User: create a record freely — no admin approval needed
 router.post("/records", async (req, res) => {
   const userId = req.user!.id;
   const body = req.body as {
@@ -83,6 +95,7 @@ router.post("/records", async (req, res) => {
   res.status(201).json({ record: created });
 });
 
+// User: update their own non-deleted record
 router.put("/records/:id", async (req, res) => {
   const userId = req.user!.id;
   const id = Number(req.params.id);
@@ -124,6 +137,7 @@ router.put("/records/:id", async (req, res) => {
       and(
         eq(poultryRecordsTable.id, id),
         eq(poultryRecordsTable.userId, userId),
+        isNull(poultryRecordsTable.deletedAt),
       ),
     )
     .returning();
@@ -133,6 +147,34 @@ router.put("/records/:id", async (req, res) => {
     return;
   }
   res.json({ record: updated });
+});
+
+// User: soft-delete their own record (admin retains it invisibly)
+router.delete("/records/:id", async (req, res) => {
+  const userId = req.user!.id;
+  const id = Number(req.params.id);
+  if (isNaN(id)) {
+    res.status(400).json({ error: "Invalid id" });
+    return;
+  }
+
+  const [deleted] = await db
+    .update(poultryRecordsTable)
+    .set({ deletedAt: new Date() })
+    .where(
+      and(
+        eq(poultryRecordsTable.id, id),
+        eq(poultryRecordsTable.userId, userId),
+        isNull(poultryRecordsTable.deletedAt),
+      ),
+    )
+    .returning({ id: poultryRecordsTable.id });
+
+  if (!deleted) {
+    res.status(404).json({ error: "Record not found" });
+    return;
+  }
+  res.json({ ok: true });
 });
 
 export default router;

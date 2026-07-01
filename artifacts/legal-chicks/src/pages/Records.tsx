@@ -17,6 +17,16 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import {
   Form,
   FormControl,
   FormField,
@@ -31,7 +41,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Plus, Pencil, Loader2, ClipboardList } from "lucide-react";
+import { Plus, Pencil, Trash2, Loader2, ClipboardList } from "lucide-react";
 
 const recordSchema = z.object({
   batchName: z.string().min(1, "Batch name is required"),
@@ -182,6 +192,7 @@ export default function Records() {
   const [fetching, setFetching] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState<PoultryRecord | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<PoultryRecord | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -219,6 +230,20 @@ export default function Records() {
     }
   };
 
+  const handleDelete = async () => {
+    if (!deleteTarget) return;
+    setSubmitting(true);
+    try {
+      await api.records.delete(deleteTarget.id);
+      setRecords((prev) => prev.filter((r) => r.id !== deleteTarget.id));
+      setDeleteTarget(null);
+    } catch (err) {
+      alert((err as Error).message);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   const openAdd = () => { setEditing(null); setDialogOpen(true); };
   const openEdit = (r: PoultryRecord) => { setEditing(r); setDialogOpen(true); };
 
@@ -241,8 +266,10 @@ export default function Records() {
       <main className="pt-20 md:pt-16 pb-16 container mx-auto px-4 md:px-6">
         <div className="pt-8 pb-6 flex items-start justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-foreground font-serif">Poultry Records</h1>
-            <p className="text-muted-foreground mt-1">Track and manage your flock batches.</p>
+            <h1 className="text-3xl font-bold text-foreground font-serif">My Records</h1>
+            <p className="text-muted-foreground mt-1">
+              Add, edit, or remove your flock batches anytime — no approval needed.
+            </p>
           </div>
           <Button onClick={openAdd} className="bg-[#3a0d0d] hover:bg-[#5a1919] text-white gap-2">
             <Plus className="w-4 h-4" /> Add Record
@@ -257,7 +284,7 @@ export default function Records() {
           <div className="text-center py-24 bg-muted/30 rounded-3xl border border-border/50">
             <ClipboardList className="w-14 h-14 text-muted-foreground/30 mx-auto mb-4" />
             <h3 className="text-lg font-semibold text-foreground mb-2">No records yet</h3>
-            <p className="text-muted-foreground mb-6">Start logging your flock batches to track performance.</p>
+            <p className="text-muted-foreground mb-6">Start logging your flock batches freely — no approval required.</p>
             <Button onClick={openAdd} className="bg-[#3a0d0d] text-white gap-2">
               <Plus className="w-4 h-4" /> Add First Record
             </Button>
@@ -288,9 +315,14 @@ export default function Records() {
                       <td className="px-4 py-3 text-center">{r.avgWeightKg ?? "—"}</td>
                       <td className="px-4 py-3 text-muted-foreground whitespace-nowrap text-xs">{new Date(r.createdAt).toLocaleDateString()}</td>
                       <td className="px-4 py-3">
-                        <Button size="sm" variant="ghost" onClick={() => openEdit(r)} className="gap-1.5 text-muted-foreground hover:text-primary">
-                          <Pencil className="w-3.5 h-3.5" /> Edit
-                        </Button>
+                        <div className="flex items-center gap-1">
+                          <Button size="sm" variant="ghost" onClick={() => openEdit(r)} className="gap-1 text-muted-foreground hover:text-primary h-8 px-2">
+                            <Pencil className="w-3.5 h-3.5" />
+                          </Button>
+                          <Button size="sm" variant="ghost" onClick={() => setDeleteTarget(r)} className="gap-1 text-muted-foreground hover:text-red-600 h-8 px-2">
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </Button>
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -299,8 +331,13 @@ export default function Records() {
             </div>
           </div>
         )}
+
+        <p className="text-xs text-muted-foreground mt-4 text-center">
+          You can freely add, edit, or delete your records at any time. Deleted records are retained by the farm admin for auditing.
+        </p>
       </main>
 
+      {/* Add / Edit Dialog */}
       <Dialog open={dialogOpen} onOpenChange={(o) => { setDialogOpen(o); if (!o) setEditing(null); }}>
         <DialogContent className="max-w-2xl">
           <DialogHeader>
@@ -328,6 +365,30 @@ export default function Records() {
           />
         </DialogContent>
       </Dialog>
+
+      {/* Delete Confirm */}
+      <AlertDialog open={!!deleteTarget} onOpenChange={(o) => { if (!o) setDeleteTarget(null); }}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Remove Record</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to remove <strong>{deleteTarget?.batchName}</strong> from your records?
+              The farm admin will retain a copy of this entry for auditing purposes.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDelete}
+              disabled={submitting}
+              className="bg-red-600 hover:bg-red-700 text-white"
+            >
+              {submitting ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
+              Remove
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
