@@ -1,9 +1,31 @@
 import { Router } from "express";
-import { db, poultryRecordsTable } from "@workspace/db";
+import { db, poultryRecordsTable, usersTable } from "@workspace/db";
 import { eq, and } from "drizzle-orm";
 import { requireAuth } from "../lib/auth";
 
 const router = Router();
+
+// Public: return all records posted by the admin user — no auth required
+router.get("/records/public", async (_req, res) => {
+  const [adminUser] = await db
+    .select({ id: usersTable.id })
+    .from(usersTable)
+    .where(eq(usersTable.username, "admin"))
+    .limit(1);
+
+  if (!adminUser) {
+    res.json({ records: [] });
+    return;
+  }
+
+  const records = await db
+    .select()
+    .from(poultryRecordsTable)
+    .where(eq(poultryRecordsTable.userId, adminUser.id))
+    .orderBy(poultryRecordsTable.createdAt);
+
+  res.json({ records });
+});
 
 router.use(requireAuth);
 
