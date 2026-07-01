@@ -84,10 +84,22 @@ function Navbar() {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-background/95 backdrop-blur-md shadow-sm border-b border-border/50 py-3" : "bg-transparent py-5"}`}>
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-        <a href="#" className={`flex items-center gap-3 font-serif text-2xl font-bold tracking-tight ${isScrolled ? "text-primary" : "text-white"}`}>
-          <img src={farmLogo} alt="Legal Chicks Poultry Farm Logo" className="w-10 h-10 object-contain" />
-          LEGAL CHICKS
-        </a>
+        <div className="flex flex-col items-start gap-1">
+          <a href="#" className={`flex items-center gap-3 font-serif text-2xl font-bold tracking-tight ${isScrolled ? "text-primary" : "text-white"}`}>
+            <img src={farmLogo} alt="Legal Chicks Poultry Farm Logo" className="w-10 h-10 object-contain" />
+            LEGAL CHICKS
+          </a>
+          <a
+            href="/login"
+            className={`ml-[52px] text-xs font-semibold tracking-wide px-3 py-0.5 rounded-full border transition-colors ${
+              isScrolled
+                ? "border-primary/50 text-primary hover:bg-primary hover:text-white"
+                : "border-white/50 text-white/80 hover:bg-white/20 hover:text-white"
+            }`}
+          >
+            Member Portal
+          </a>
+        </div>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
