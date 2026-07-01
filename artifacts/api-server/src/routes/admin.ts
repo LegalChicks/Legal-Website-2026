@@ -1,12 +1,14 @@
 import { Router } from "express";
 import bcrypt from "bcryptjs";
-import { db, usersTable } from "@workspace/db";
-import { eq, ne } from "drizzle-orm";
+import { db, usersTable, poultryRecordsTable } from "@workspace/db";
+import { eq } from "drizzle-orm";
 import { requireAdmin } from "../lib/auth";
 
 const router = Router();
 
 router.use(requireAdmin);
+
+// --- User management ---
 
 router.get("/admin/users", async (_req, res) => {
   const users = await db
@@ -33,9 +35,7 @@ router.post("/admin/users", async (req, res) => {
   };
 
   if (!username || !password || !fullName) {
-    res
-      .status(400)
-      .json({ error: "username, password, and fullName are required" });
+    res.status(400).json({ error: "username, password, and fullName are required" });
     return;
   }
 
@@ -134,6 +134,39 @@ router.delete("/admin/users/:id", async (req, res) => {
     return;
   }
   res.json({ ok: true });
+});
+
+// --- All records (admin view) ---
+// Returns every record from every user, including soft-deleted ones.
+// Joined with the owning user's name so the admin can see who submitted what.
+router.get("/admin/records", async (_req, res) => {
+  const rows = await db
+    .select({
+      id: poultryRecordsTable.id,
+      userId: poultryRecordsTable.userId,
+      memberName: usersTable.fullName,
+      memberUsername: usersTable.username,
+      batchName: poultryRecordsTable.batchName,
+      birdType: poultryRecordsTable.birdType,
+      breed: poultryRecordsTable.breed,
+      quantity: poultryRecordsTable.quantity,
+      ageWeeks: poultryRecordsTable.ageWeeks,
+      hatchDate: poultryRecordsTable.hatchDate,
+      feedNotes: poultryRecordsTable.feedNotes,
+      healthStatus: poultryRecordsTable.healthStatus,
+      mortalityCount: poultryRecordsTable.mortalityCount,
+      eggProduction: poultryRecordsTable.eggProduction,
+      avgWeightKg: poultryRecordsTable.avgWeightKg,
+      freeNotes: poultryRecordsTable.freeNotes,
+      createdAt: poultryRecordsTable.createdAt,
+      updatedAt: poultryRecordsTable.updatedAt,
+      deletedAt: poultryRecordsTable.deletedAt,
+    })
+    .from(poultryRecordsTable)
+    .innerJoin(usersTable, eq(poultryRecordsTable.userId, usersTable.id))
+    .orderBy(poultryRecordsTable.createdAt);
+
+  res.json({ records: rows });
 });
 
 export default router;

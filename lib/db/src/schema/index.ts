@@ -31,6 +31,7 @@ export const poultryRecordsTable = pgTable("poultry_records", {
   freeNotes: text("free_notes"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
+  deletedAt: timestamp("deleted_at"),
 });
 
 export const insertUserSchema = createInsertSchema(usersTable).omit({
@@ -40,7 +41,7 @@ export const insertUserSchema = createInsertSchema(usersTable).omit({
 
 export const insertPoultryRecordSchema = createInsertSchema(
   poultryRecordsTable,
-).omit({ id: true, userId: true, createdAt: true, updatedAt: true });
+).omit({ id: true, userId: true, createdAt: true, updatedAt: true, deletedAt: true });
 
 export type User = typeof usersTable.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
