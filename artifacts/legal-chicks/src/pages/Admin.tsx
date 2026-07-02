@@ -3,7 +3,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useAuth } from "@/lib/auth-context";
-import { api, type Member, type AdminRecord } from "@/lib/api";
+import {
+  api,
+  type Member,
+  type AdminRecord,
+  type AdminSalesRecord,
+  type AdminIncubationRecord,
+} from "@/lib/api";
 import { useLocation } from "wouter";
 import { AppNav } from "@/components/AppNav";
 import { Button } from "@/components/ui/button";
@@ -50,7 +56,21 @@ import {
   Settings,
   ClipboardList,
   EyeOff,
+  ReceiptText,
+  Egg,
 } from "lucide-react";
+
+function currency(n: string | number) {
+  const v = typeof n === "string" ? parseFloat(n) : n;
+  if (isNaN(v)) return "₱0.00";
+  return `₱${v.toLocaleString("en-PH", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+}
+
+const SALE_PRODUCT_LABELS: Record<string, string> = {
+  fertile_eggs: "Fertile Eggs",
+  table_eggs: "Table Eggs",
+  live_chickens: "Live Chickens",
+};
 
 const createSchema = z.object({
   username: z.string().min(3, "At least 3 characters"),
@@ -81,7 +101,7 @@ export default function Admin() {
   const { user, loading } = useAuth();
   const [, setLocation] = useLocation();
 
-  const [tab, setTab] = useState<"members" | "records" | "settings">("members");
+  const [tab, setTab] = useState<"members" | "records" | "sales" | "incubation" | "settings">("members");
 
   // Members state
   const [members, setMembers] = useState<Member[]>([]);
@@ -97,6 +117,18 @@ export default function Admin() {
   const [recordsFetching, setRecordsFetching] = useState(true);
   const [showDeleted, setShowDeleted] = useState(true);
   const [filterUser, setFilterUser] = useState<string>("all");
+
+  // All sales state
+  const [allSales, setAllSales] = useState<AdminSalesRecord[]>([]);
+  const [salesFetching, setSalesFetching] = useState(true);
+  const [showDeletedSales, setShowDeletedSales] = useState(true);
+  const [filterSalesUser, setFilterSalesUser] = useState<string>("all");
+
+  // All incubation state
+  const [allIncubation, setAllIncubation] = useState<AdminIncubationRecord[]>([]);
+  const [incubationFetching, setIncubationFetching] = useState(true);
+  const [showDeletedIncubation, setShowDeletedIncubation] = useState(true);
+  const [filterIncubationUser, setFilterIncubationUser] = useState<string>("all");
 
   useEffect(() => {
     if (!loading && (!user || user.role !== "admin")) setLocation("/login");
@@ -118,10 +150,28 @@ export default function Admin() {
     finally { setRecordsFetching(false); }
   };
 
+  const loadAllSales = async () => {
+    try {
+      const { records } = await api.admin.listAllSales();
+      setAllSales(records);
+    } catch {}
+    finally { setSalesFetching(false); }
+  };
+
+  const loadAllIncubation = async () => {
+    try {
+      const { records } = await api.admin.listAllIncubation();
+      setAllIncubation(records);
+    } catch {}
+    finally { setIncubationFetching(false); }
+  };
+
   useEffect(() => {
     if (user?.role === "admin") {
       loadMembers();
       loadAllRecords();
+      loadAllSales();
+      loadAllIncubation();
     }
   }, [user]);
 
@@ -193,9 +243,28 @@ export default function Admin() {
   const activeCount = allRecords.filter((r) => !r.deletedAt).length;
   const deletedCount = allRecords.filter((r) => !!r.deletedAt).length;
 
+  const displayedSales = allSales.filter((r) => {
+    const matchUser = filterSalesUser === "all" || String(r.userId) === filterSalesUser;
+    const matchDeleted = showDeletedSales ? true : !r.deletedAt;
+    return matchUser && matchDeleted;
+  });
+  const activeSalesCount = allSales.filter((r) => !r.deletedAt).length;
+  const deletedSalesCount = allSales.filter((r) => !!r.deletedAt).length;
+  const totalRevenue = allSales.filter((r) => !r.deletedAt).reduce((sum, r) => sum + parseFloat(r.totalAmount || "0"), 0);
+
+  const displayedIncubation = allIncubation.filter((r) => {
+    const matchUser = filterIncubationUser === "all" || String(r.userId) === filterIncubationUser;
+    const matchDeleted = showDeletedIncubation ? true : !r.deletedAt;
+    return matchUser && matchDeleted;
+  });
+  const activeIncubationCount = allIncubation.filter((r) => !r.deletedAt).length;
+  const deletedIncubationCount = allIncubation.filter((r) => !!r.deletedAt).length;
+
   const tabs = [
     { key: "members", label: "Members", icon: <Users className="w-4 h-4" /> },
     { key: "records", label: "All Records", icon: <ClipboardList className="w-4 h-4" /> },
+    { key: "sales", label: "All Sales", icon: <ReceiptText className="w-4 h-4" /> },
+    { key: "incubation", label: "All Incubation", icon: <Egg className="w-4 h-4" /> },
     { key: "settings", label: "Settings", icon: <Settings className="w-4 h-4" /> },
   ];
 
@@ -392,6 +461,215 @@ export default function Admin() {
                 <p className="text-xs text-muted-foreground mt-3 text-center">
                   <EyeOff className="inline w-3 h-3 mr-1" />
                   Deleted records are hidden from members but permanently retained here for the admin.
+                </p>
+              )}
+            </CardContent>
+          </Card>
+        )}
+
+        {/* ── ALL SALES TAB ── */}
+        {tab === "sales" && (
+          <Card className="border-border/50">
+            <CardHeader className="pb-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <CardTitle className="text-lg">All Member Sales</CardTitle>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    <span className="text-green-600 font-medium">{activeSalesCount} active</span>
+                    {" · "}
+                    <span className="text-[#3a0d0d] font-semibold">{currency(totalRevenue)} total revenue</span>
+                    {deletedSalesCount > 0 && (
+                      <> · <span className="text-red-500 font-medium">{deletedSalesCount} deleted by users</span> (retained for audit)</>
+                    )}
+                  </p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <select
+                    value={filterSalesUser}
+                    onChange={(e) => setFilterSalesUser(e.target.value)}
+                    className="text-sm border border-border/60 rounded-lg px-3 py-1.5 bg-background text-foreground"
+                  >
+                    <option value="all">All Members</option>
+                    {members.map((m) => (
+                      <option key={m.id} value={String(m.id)}>{m.fullName}</option>
+                    ))}
+                  </select>
+                  <button
+                    onClick={() => setShowDeletedSales(!showDeletedSales)}
+                    className={`flex items-center gap-2 text-sm px-3 py-1.5 rounded-lg border transition-colors ${
+                      showDeletedSales
+                        ? "bg-red-50 border-red-200 text-red-700"
+                        : "bg-muted border-border/60 text-muted-foreground"
+                    }`}
+                  >
+                    <EyeOff className="w-3.5 h-3.5" />
+                    {showDeletedSales ? "Hiding none" : "Show deleted"}
+                  </button>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {salesFetching ? (
+                <div className="flex items-center justify-center py-12"><Loader2 className="w-6 h-6 animate-spin text-muted-foreground" /></div>
+              ) : displayedSales.length === 0 ? (
+                <div className="text-center py-12 text-muted-foreground">
+                  <ReceiptText className="w-10 h-10 mx-auto mb-3 opacity-30" />
+                  <p>No sales found.</p>
+                </div>
+              ) : (
+                <div className="overflow-x-auto rounded-xl border border-border/50">
+                  <table className="w-full text-sm">
+                    <thead className="bg-[#3a0d0d] text-white">
+                      <tr>
+                        {["Member", "Date", "Product", "Qty", "Total", "Buyer", "Payment", "Status"].map((h) => (
+                          <th key={h} className="px-3 py-3 text-left text-xs font-semibold uppercase tracking-wide whitespace-nowrap">{h}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {displayedSales.map((r, i) => (
+                        <tr
+                          key={r.id}
+                          className={`border-b border-border/30 transition-colors ${
+                            r.deletedAt
+                              ? "bg-red-50/60 opacity-70"
+                              : i % 2 === 0 ? "bg-white hover:bg-muted/20" : "bg-muted/10 hover:bg-muted/30"
+                          }`}
+                        >
+                          <td className="px-3 py-3 whitespace-nowrap">
+                            <div>
+                              <p className="font-medium text-foreground text-xs">{r.memberName}</p>
+                              <p className="text-muted-foreground text-xs font-mono">@{r.memberUsername}</p>
+                            </div>
+                          </td>
+                          <td className="px-3 py-3 text-xs whitespace-nowrap text-muted-foreground">{new Date(r.saleDate).toLocaleDateString()}</td>
+                          <td className="px-3 py-3 font-medium text-foreground whitespace-nowrap text-xs">{SALE_PRODUCT_LABELS[r.productType] ?? r.productType}</td>
+                          <td className="px-3 py-3 text-center text-xs">{r.quantity} {r.unit}</td>
+                          <td className="px-3 py-3 font-semibold text-[#3a0d0d] whitespace-nowrap">{currency(r.totalAmount)}</td>
+                          <td className="px-3 py-3 text-xs whitespace-nowrap">{r.buyerName}</td>
+                          <td className="px-3 py-3 text-xs capitalize whitespace-nowrap">{r.paymentMethod.replace("_", " ")}</td>
+                          <td className="px-3 py-3">
+                            {r.deletedAt ? (
+                              <Badge className="bg-red-100 text-red-600 text-xs gap-1">
+                                <EyeOff className="w-3 h-3" /> Deleted
+                              </Badge>
+                            ) : (
+                              <Badge className="bg-green-100 text-green-700 text-xs">{r.paymentStatus}</Badge>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+              {deletedSalesCount > 0 && (
+                <p className="text-xs text-muted-foreground mt-3 text-center">
+                  <EyeOff className="inline w-3 h-3 mr-1" />
+                  Deleted sales are hidden from members but permanently retained here for the admin.
+                </p>
+              )}
+            </CardContent>
+          </Card>
+        )}
+
+        {/* ── ALL INCUBATION TAB ── */}
+        {tab === "incubation" && (
+          <Card className="border-border/50">
+            <CardHeader className="pb-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <CardTitle className="text-lg">All Member Incubation Batches</CardTitle>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    <span className="text-green-600 font-medium">{activeIncubationCount} active</span>
+                    {deletedIncubationCount > 0 && (
+                      <> · <span className="text-red-500 font-medium">{deletedIncubationCount} deleted by users</span> (retained for audit)</>
+                    )}
+                  </p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <select
+                    value={filterIncubationUser}
+                    onChange={(e) => setFilterIncubationUser(e.target.value)}
+                    className="text-sm border border-border/60 rounded-lg px-3 py-1.5 bg-background text-foreground"
+                  >
+                    <option value="all">All Members</option>
+                    {members.map((m) => (
+                      <option key={m.id} value={String(m.id)}>{m.fullName}</option>
+                    ))}
+                  </select>
+                  <button
+                    onClick={() => setShowDeletedIncubation(!showDeletedIncubation)}
+                    className={`flex items-center gap-2 text-sm px-3 py-1.5 rounded-lg border transition-colors ${
+                      showDeletedIncubation
+                        ? "bg-red-50 border-red-200 text-red-700"
+                        : "bg-muted border-border/60 text-muted-foreground"
+                    }`}
+                  >
+                    <EyeOff className="w-3.5 h-3.5" />
+                    {showDeletedIncubation ? "Hiding none" : "Show deleted"}
+                  </button>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {incubationFetching ? (
+                <div className="flex items-center justify-center py-12"><Loader2 className="w-6 h-6 animate-spin text-muted-foreground" /></div>
+              ) : displayedIncubation.length === 0 ? (
+                <div className="text-center py-12 text-muted-foreground">
+                  <Egg className="w-10 h-10 mx-auto mb-3 opacity-30" />
+                  <p>No incubation batches found.</p>
+                </div>
+              ) : (
+                <div className="overflow-x-auto rounded-xl border border-border/50">
+                  <table className="w-full text-sm">
+                    <thead className="bg-[#3a0d0d] text-white">
+                      <tr>
+                        {["Member", "Batch", "Breed", "Eggs Set", "Set Date", "Hatched", "Status"].map((h) => (
+                          <th key={h} className="px-3 py-3 text-left text-xs font-semibold uppercase tracking-wide whitespace-nowrap">{h}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {displayedIncubation.map((r, i) => (
+                        <tr
+                          key={r.id}
+                          className={`border-b border-border/30 transition-colors ${
+                            r.deletedAt
+                              ? "bg-red-50/60 opacity-70"
+                              : i % 2 === 0 ? "bg-white hover:bg-muted/20" : "bg-muted/10 hover:bg-muted/30"
+                          }`}
+                        >
+                          <td className="px-3 py-3 whitespace-nowrap">
+                            <div>
+                              <p className="font-medium text-foreground text-xs">{r.memberName}</p>
+                              <p className="text-muted-foreground text-xs font-mono">@{r.memberUsername}</p>
+                            </div>
+                          </td>
+                          <td className="px-3 py-3 font-medium text-foreground whitespace-nowrap text-xs">{r.batchName}</td>
+                          <td className="px-3 py-3 text-muted-foreground whitespace-nowrap text-xs">{r.breed || "—"}</td>
+                          <td className="px-3 py-3 text-center text-xs">{r.eggsSetCount}</td>
+                          <td className="px-3 py-3 text-xs whitespace-nowrap">{new Date(r.setDate).toLocaleDateString()}</td>
+                          <td className="px-3 py-3 text-center text-xs">{r.hatchedCount ?? "—"}</td>
+                          <td className="px-3 py-3">
+                            {r.deletedAt ? (
+                              <Badge className="bg-red-100 text-red-600 text-xs gap-1">
+                                <EyeOff className="w-3 h-3" /> Deleted
+                              </Badge>
+                            ) : (
+                              <Badge className="bg-green-100 text-green-700 text-xs capitalize">{r.status}</Badge>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+              {deletedIncubationCount > 0 && (
+                <p className="text-xs text-muted-foreground mt-3 text-center">
+                  <EyeOff className="inline w-3 h-3 mr-1" />
+                  Deleted incubation batches are hidden from members but permanently retained here for the admin.
                 </p>
               )}
             </CardContent>

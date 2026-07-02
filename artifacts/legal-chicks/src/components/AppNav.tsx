@@ -3,7 +3,7 @@ import { useLocation } from "wouter";
 import farmLogo from "@assets/Legal_Chicks_Farm_Logo_1782840193981.png";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { LogOut, LayoutDashboard, ClipboardList, ShieldCheck } from "lucide-react";
+import { LogOut, LayoutDashboard, ClipboardList, ShieldCheck, ReceiptText, Egg } from "lucide-react";
 
 export function AppNav() {
   const { user, logout } = useAuth();
@@ -19,6 +19,8 @@ export function AppNav() {
   const navLinks = [
     { href: "/dashboard", label: "Dashboard", icon: <LayoutDashboard className="w-4 h-4" /> },
     { href: "/records", label: "My Records", icon: <ClipboardList className="w-4 h-4" /> },
+    { href: "/sales", label: "Sales", icon: <ReceiptText className="w-4 h-4" /> },
+    { href: "/incubation", label: "Incubation", icon: <Egg className="w-4 h-4" /> },
     ...(user.role === "admin"
       ? [{ href: "/admin", label: "Admin", icon: <ShieldCheck className="w-4 h-4" /> }]
       : []),

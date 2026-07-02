@@ -65,6 +65,69 @@ export type AdminRecord = PoultryRecord & {
   memberUsername: string;
 };
 
+export type SalesRecord = {
+  id: number;
+  userId: number;
+  saleDate: string;
+  productType: "fertile_eggs" | "table_eggs" | "live_chickens";
+  breed: string;
+  quantity: number;
+  unit: string;
+  unitPrice: string;
+  totalAmount: string;
+  buyerName: string;
+  buyerContact: string;
+  deliveryMethod: string;
+  deliveryAddress: string | null;
+  paymentMethod: string;
+  paymentStatus: string;
+  amountPaid: string;
+  balance: string;
+  notes: string | null;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
+};
+
+export type AdminSalesRecord = SalesRecord & {
+  memberName: string;
+  memberUsername: string;
+};
+
+export type IncubationRecord = {
+  id: number;
+  userId: number;
+  batchName: string;
+  breed: string;
+  eggsSetCount: number;
+  setDate: string;
+  incubatorType: string;
+  temperatureC: string | null;
+  humidityPercent: string | null;
+  expectedHatchDate: string | null;
+  day7FertileCount: number | null;
+  day7InfertileCount: number | null;
+  day14FertileCount: number | null;
+  day14InfertileCount: number | null;
+  day18FertileCount: number | null;
+  day18InfertileCount: number | null;
+  actualHatchDate: string | null;
+  hatchedCount: number | null;
+  unhatchedCount: number | null;
+  deadInShellCount: number | null;
+  cullCount: number | null;
+  status: "incubating" | "hatched" | "failed";
+  notes: string | null;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
+};
+
+export type AdminIncubationRecord = IncubationRecord & {
+  memberName: string;
+  memberUsername: string;
+};
+
 export const api = {
   auth: {
     login: (username: string, password: string) =>
@@ -105,6 +168,10 @@ export const api = {
       apiFetch(`/admin/users/${id}`, { method: "DELETE" }),
     listAllRecords: () =>
       apiFetch<{ records: AdminRecord[] }>("/admin/records"),
+    listAllSales: () =>
+      apiFetch<{ records: AdminSalesRecord[] }>("/admin/sales"),
+    listAllIncubation: () =>
+      apiFetch<{ records: AdminIncubationRecord[] }>("/admin/incubation"),
   },
   records: {
     listPublic: () => apiFetch<{ records: PoultryRecord[] }>("/records/public"),
@@ -121,5 +188,35 @@ export const api = {
       }),
     delete: (id: number) =>
       apiFetch<{ ok: boolean }>(`/records/${id}`, { method: "DELETE" }),
+  },
+  sales: {
+    list: () => apiFetch<{ records: SalesRecord[] }>("/sales"),
+    create: (data: Partial<SalesRecord>) =>
+      apiFetch<{ record: SalesRecord }>("/sales", {
+        method: "POST",
+        body: JSON.stringify(data),
+      }),
+    update: (id: number, data: Partial<SalesRecord>) =>
+      apiFetch<{ record: SalesRecord }>(`/sales/${id}`, {
+        method: "PUT",
+        body: JSON.stringify(data),
+      }),
+    delete: (id: number) =>
+      apiFetch<{ ok: boolean }>(`/sales/${id}`, { method: "DELETE" }),
+  },
+  incubation: {
+    list: () => apiFetch<{ records: IncubationRecord[] }>("/incubation"),
+    create: (data: Partial<IncubationRecord>) =>
+      apiFetch<{ record: IncubationRecord }>("/incubation", {
+        method: "POST",
+        body: JSON.stringify(data),
+      }),
+    update: (id: number, data: Partial<IncubationRecord>) =>
+      apiFetch<{ record: IncubationRecord }>(`/incubation/${id}`, {
+        method: "PUT",
+        body: JSON.stringify(data),
+      }),
+    delete: (id: number) =>
+      apiFetch<{ ok: boolean }>(`/incubation/${id}`, { method: "DELETE" }),
   },
 };
