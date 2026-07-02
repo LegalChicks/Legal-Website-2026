@@ -1,6 +1,12 @@
 import { Router } from "express";
 import bcrypt from "bcryptjs";
-import { db, usersTable, poultryRecordsTable } from "@workspace/db";
+import {
+  db,
+  usersTable,
+  poultryRecordsTable,
+  salesRecordsTable,
+  incubationRecordsTable,
+} from "@workspace/db";
 import { eq } from "drizzle-orm";
 import { requireAdmin } from "../lib/auth";
 
@@ -165,6 +171,81 @@ router.get("/admin/records", async (_req, res) => {
     .from(poultryRecordsTable)
     .innerJoin(usersTable, eq(poultryRecordsTable.userId, usersTable.id))
     .orderBy(poultryRecordsTable.createdAt);
+
+  res.json({ records: rows });
+});
+
+// --- All sales (admin view) ---
+router.get("/admin/sales", async (_req, res) => {
+  const rows = await db
+    .select({
+      id: salesRecordsTable.id,
+      userId: salesRecordsTable.userId,
+      memberName: usersTable.fullName,
+      memberUsername: usersTable.username,
+      saleDate: salesRecordsTable.saleDate,
+      productType: salesRecordsTable.productType,
+      breed: salesRecordsTable.breed,
+      quantity: salesRecordsTable.quantity,
+      unit: salesRecordsTable.unit,
+      unitPrice: salesRecordsTable.unitPrice,
+      totalAmount: salesRecordsTable.totalAmount,
+      buyerName: salesRecordsTable.buyerName,
+      buyerContact: salesRecordsTable.buyerContact,
+      deliveryMethod: salesRecordsTable.deliveryMethod,
+      deliveryAddress: salesRecordsTable.deliveryAddress,
+      paymentMethod: salesRecordsTable.paymentMethod,
+      paymentStatus: salesRecordsTable.paymentStatus,
+      amountPaid: salesRecordsTable.amountPaid,
+      balance: salesRecordsTable.balance,
+      notes: salesRecordsTable.notes,
+      createdAt: salesRecordsTable.createdAt,
+      updatedAt: salesRecordsTable.updatedAt,
+      deletedAt: salesRecordsTable.deletedAt,
+    })
+    .from(salesRecordsTable)
+    .innerJoin(usersTable, eq(salesRecordsTable.userId, usersTable.id))
+    .orderBy(salesRecordsTable.createdAt);
+
+  res.json({ records: rows });
+});
+
+// --- All incubation batches (admin view) ---
+router.get("/admin/incubation", async (_req, res) => {
+  const rows = await db
+    .select({
+      id: incubationRecordsTable.id,
+      userId: incubationRecordsTable.userId,
+      memberName: usersTable.fullName,
+      memberUsername: usersTable.username,
+      batchName: incubationRecordsTable.batchName,
+      breed: incubationRecordsTable.breed,
+      eggsSetCount: incubationRecordsTable.eggsSetCount,
+      setDate: incubationRecordsTable.setDate,
+      incubatorType: incubationRecordsTable.incubatorType,
+      temperatureC: incubationRecordsTable.temperatureC,
+      humidityPercent: incubationRecordsTable.humidityPercent,
+      expectedHatchDate: incubationRecordsTable.expectedHatchDate,
+      day7FertileCount: incubationRecordsTable.day7FertileCount,
+      day7InfertileCount: incubationRecordsTable.day7InfertileCount,
+      day14FertileCount: incubationRecordsTable.day14FertileCount,
+      day14InfertileCount: incubationRecordsTable.day14InfertileCount,
+      day18FertileCount: incubationRecordsTable.day18FertileCount,
+      day18InfertileCount: incubationRecordsTable.day18InfertileCount,
+      actualHatchDate: incubationRecordsTable.actualHatchDate,
+      hatchedCount: incubationRecordsTable.hatchedCount,
+      unhatchedCount: incubationRecordsTable.unhatchedCount,
+      deadInShellCount: incubationRecordsTable.deadInShellCount,
+      cullCount: incubationRecordsTable.cullCount,
+      status: incubationRecordsTable.status,
+      notes: incubationRecordsTable.notes,
+      createdAt: incubationRecordsTable.createdAt,
+      updatedAt: incubationRecordsTable.updatedAt,
+      deletedAt: incubationRecordsTable.deletedAt,
+    })
+    .from(incubationRecordsTable)
+    .innerJoin(usersTable, eq(incubationRecordsTable.userId, usersTable.id))
+    .orderBy(incubationRecordsTable.createdAt);
 
   res.json({ records: rows });
 });
