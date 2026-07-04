@@ -734,7 +734,7 @@ function Contact() {
       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')] opacity-20 mix-blend-overlay z-0" />
       <div className="container relative z-10 mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          <div>
+          <div className="order-2 lg:order-1">
             <h2 className="text-4xl md:text-5xl font-bold mb-4 font-serif text-white">Secure Your Premium Batch</h2>
             <p className="text-xl text-secondary mb-12 font-light italic">Direct. No middlemen. 100% Farm-to-Table.</p>
 
@@ -784,7 +784,7 @@ function Contact() {
             </div>
           </div>
 
-          <div className="bg-white rounded-3xl p-8 shadow-2xl text-foreground">
+          <div className="order-1 lg:order-2 bg-white rounded-3xl p-8 shadow-2xl text-foreground">
             <h3 className="text-2xl font-bold mb-6 font-serif">Order Inquiry Form</h3>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
