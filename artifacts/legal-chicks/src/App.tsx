@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
-import { api, type PoultryRecord } from "@/lib/api";
+import React, { useState, useEffect } from "react";
 import img1 from "@assets/40b2c192-91cc-43b3-a351-eb3ffea7f2f8_1782832325228.jpg";
 import img2 from "@assets/0fa9fbb4-9794-4dba-86a6-86594d1b8f53_1782832325224.jpg";
 import img3 from "@assets/6da2d5e3-0616-4100-8117-fa7751001151_1782832325225.jpg";
@@ -85,22 +84,10 @@ function Navbar() {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-background/95 backdrop-blur-md shadow-sm border-b border-border/50 py-3" : "bg-transparent py-5"}`}>
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-        <div className="flex flex-col items-start gap-1">
-          <a href="#" className={`flex items-center gap-3 font-serif text-2xl font-bold tracking-tight ${isScrolled ? "text-primary" : "text-white"}`}>
-            <img src={farmLogo} alt="Legal Chicks Poultry Farm Logo" className="w-10 h-10 object-contain" />
-            LEGAL CHICKS
-          </a>
-          <a
-            href="/login"
-            className={`ml-[52px] text-xs font-semibold tracking-wide px-3 py-0.5 rounded-full border transition-colors ${
-              isScrolled
-                ? "border-primary/50 text-primary hover:bg-primary hover:text-white"
-                : "border-white/50 text-white/80 hover:bg-white/20 hover:text-white"
-            }`}
-          >
-            Member Portal
-          </a>
-        </div>
+        <a href="#" className={`flex items-center gap-3 font-serif text-2xl font-bold tracking-tight ${isScrolled ? "text-primary" : "text-white"}`}>
+          <img src={farmLogo} alt="Legal Chicks Poultry Farm Logo" className="w-10 h-10 object-contain" />
+          LEGAL CHICKS
+        </a>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
@@ -921,124 +908,6 @@ function ChicksBrooderBanner() {
   );
 }
 
-function FarmRecords() {
-  const [records, setRecords] = useState<PoultryRecord[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    api.records
-      .listPublic()
-      .then(({ records }) => setRecords(records))
-      .catch(() => {})
-      .finally(() => setLoading(false));
-  }, []);
-
-  if (!loading && records.length === 0) return null;
-
-  const totalBirds = records.reduce((s, r) => s + (r.quantity ?? 0), 0);
-  const totalEggs = records.reduce((s, r) => s + (r.eggProduction ?? 0), 0);
-  const healthyBatches = records.filter((r) =>
-    r.healthStatus?.toLowerCase().includes("healthy"),
-  ).length;
-
-  const healthColor = (s: string | null) => {
-    if (!s) return "bg-white/10 text-white/60";
-    const l = s.toLowerCase();
-    if (l.includes("healthy")) return "bg-green-500/20 text-green-300";
-    if (l.includes("sick") || l.includes("quarantined"))
-      return "bg-red-500/20 text-red-300";
-    if (l.includes("monitoring")) return "bg-amber-500/20 text-amber-300";
-    return "bg-blue-500/20 text-blue-300";
-  };
-
-  return (
-    <section id="farm-records" className="py-24 md:py-32 bg-[#2a0808] text-white relative overflow-hidden">
-      <div className="absolute inset-0 opacity-[0.03]"
-        style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")" }}
-      />
-      <div className="container relative z-10 mx-auto px-4 md:px-6">
-        <div className="text-center mb-14">
-          <Badge className="bg-secondary/20 text-secondary border-secondary/30 mb-4">Live Farm Data</Badge>
-          <h2 className="text-4xl md:text-5xl font-bold font-serif text-white mb-4">
-            Our Flock, Openly Tracked
-          </h2>
-          <p className="text-white/60 text-lg max-w-2xl mx-auto font-light">
-            Every batch we raise is logged and published here — no secrets, just transparency from farm to your table.
-          </p>
-        </div>
-
-        {loading ? (
-          <div className="flex justify-center py-12">
-            <div className="w-8 h-8 border-2 border-secondary/40 border-t-secondary rounded-full animate-spin" />
-          </div>
-        ) : (
-          <>
-            {/* Summary stats */}
-            <div className="grid grid-cols-3 gap-4 mb-12 max-w-2xl mx-auto">
-              {[
-                { label: "Total Batches", value: records.length },
-                { label: "Total Birds", value: totalBirds.toLocaleString() },
-                { label: "Eggs Produced", value: totalEggs.toLocaleString() },
-              ].map((s) => (
-                <div key={s.label} className="text-center bg-white/5 border border-white/10 rounded-2xl p-5">
-                  <p className="text-3xl font-bold text-secondary font-serif">{s.value}</p>
-                  <p className="text-white/50 text-xs mt-1 uppercase tracking-wide">{s.label}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* Records table */}
-            <div className="rounded-2xl overflow-hidden border border-white/10">
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="bg-white/5 border-b border-white/10">
-                      {["Batch", "Breed", "Birds", "Age (wks)", "Health", "Eggs", "Avg Wt", "Logged"].map((h) => (
-                        <th key={h} className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/40 whitespace-nowrap">
-                          {h}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {records.map((r, i) => (
-                      <tr
-                        key={r.id}
-                        className={`border-b border-white/5 transition-colors hover:bg-white/5 ${
-                          i % 2 === 0 ? "bg-transparent" : "bg-white/[0.02]"
-                        }`}
-                      >
-                        <td className="px-4 py-3 font-semibold text-white whitespace-nowrap">{r.batchName}</td>
-                        <td className="px-4 py-3 text-white/60 whitespace-nowrap">{r.breed || r.birdType || "RIR"}</td>
-                        <td className="px-4 py-3 text-white/80 text-center">{r.quantity ?? "—"}</td>
-                        <td className="px-4 py-3 text-white/60 text-center">{r.ageWeeks ?? "—"}</td>
-                        <td className="px-4 py-3">
-                          <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${healthColor(r.healthStatus)}`}>
-                            {r.healthStatus || "—"}
-                          </span>
-                        </td>
-                        <td className="px-4 py-3 text-white/80 text-center">{r.eggProduction ?? "—"}</td>
-                        <td className="px-4 py-3 text-white/60 text-center">{r.avgWeightKg ? `${r.avgWeightKg} kg` : "—"}</td>
-                        <td className="px-4 py-3 text-white/40 text-xs whitespace-nowrap">
-                          {new Date(r.createdAt).toLocaleDateString("en-PH", { month: "short", day: "numeric", year: "numeric" })}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-center text-white/30 text-xs mt-6">
-              Records are updated in real time by the LCPF farm team · No authentication required to view
-            </p>
-          </>
-        )}
-      </div>
-    </section>
-  );
-}
-
 function Footer() {
   return (
     <footer className="bg-[#2a0808] pt-16 pb-8 text-white/80 border-t border-white/10 relative">
@@ -1106,7 +975,6 @@ export default function App() {
         <ProofOfQuality />
         <Gallery />
         <ChicksBrooderBanner />
-        <FarmRecords />
         <FAQ />
         <Contact />
       </main>
