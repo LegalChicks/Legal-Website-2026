@@ -1,2 +1,0 @@
-- [Legal Chicks free-input/soft-delete pattern](legal-chicks-record-pattern.md) — established CRUD pattern reused across poultry/sales/incubation record types.
-- [Monorepo pnpm workspace: api-server rebuild quirk](monorepo-build-restart-quirk.md) — new backend routes require a workflow restart, not just file save.
