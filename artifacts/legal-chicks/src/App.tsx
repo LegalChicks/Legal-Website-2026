@@ -176,7 +176,7 @@ function Hero() {
           className="text-5xl md:text-7xl lg:text-8xl font-bold max-w-5xl leading-[1.1] mb-6"
         >
           Purebred Quality. <br />
-          <span className="italic text-secondary font-light">Dark Mahogany</span>
+          <span className="italic text-secondary font-light">Case Closed.</span>
         </motion.h1>
 
         <motion.p 
