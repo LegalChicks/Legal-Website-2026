@@ -499,10 +499,10 @@ function Products() {
     },
     {
       title: "Pure RIR Day-Old Chicks",
-      price: "₱100",
+      price: "₱150",
       unit: "head (Day-Old)",
-      desc: "Fully B1B1 vaccinated before delivery. The perfect foundation for your own backyard multiplier farm. Dark Mahogany genetics mean superior disease resistance and productivity from day one.",
-      bullets: ["B1B1 Vaccinated", "Dark Mahogany Bloodline", "High Disease Resistance", "Superior Production Genetics", "Expert After-Sales Support"],
+      desc: "Not a mixed-breed backyard hatch — every chick is traced to our pure Dark Mahogany breeding stock, fully B1B1 vaccinated before it ever leaves the farm. You're paying for verified genetics, disease protection, and survivability that generic hatchery chicks simply can't match — a small premium today that pays for itself in fewer losses and far better lay rates later.",
+      bullets: ["100% Pure Dark Mahogany Bloodline (No Mixed Genetics)", "B1B1 Vaccinated Before Delivery", "Traceable Parent Stock Lineage", "Higher Livability & Disease Resistance", "Expert After-Sales Support"],
       cta: "Order Chicks",
       link: "https://wa.me/639369671213?text=Hi!%20I%27d%20like%20to%20order%20Pure%20RIR%20Day-Old%20Chicks"
     },
@@ -816,7 +816,7 @@ function Contact() {
                         </FormControl>
                         <SelectContent>
                           <SelectItem value="Premium Brown Eggs">Premium Brown Eggs (₱360/tray)</SelectItem>
-                          <SelectItem value="Pure RIR Chicks">Pure RIR Day-Old Chicks (₱100/head)</SelectItem>
+                          <SelectItem value="Pure RIR Chicks">Pure RIR Day-Old Chicks (₱150/head)</SelectItem>
                           <SelectItem value="Breeding Rooster">Premium Breeding Rooster (₱549+)</SelectItem>
 
                         </SelectContent>
