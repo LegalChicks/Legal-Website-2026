@@ -721,9 +721,11 @@ function Contact() {
   });
 
   function onSubmit(values: OrderFormValues) {
-    const text = `Hi Legal Chicks! I'd like to place an order/inquiry:\n\n*Name:* ${values.fullName}\n*Product:* ${values.product}\n*Quantity:* ${values.quantity}\n*Location/Notes:* ${values.location}\n*Message:* ${values.message || "N/A"}`;
-    const encoded = encodeURIComponent(text);
-    window.open(`https://wa.me/639369671213?text=${encoded}`, '_blank');
+    const text = `Hi Legal Chicks! I'd like to place an order/inquiry:\n\nName: ${values.fullName}\nProduct: ${values.product}\nQuantity: ${values.quantity}\nLocation/Notes: ${values.location}\nMessage: ${values.message || "N/A"}`;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).catch(() => {});
+    }
+    window.open("https://m.me/LegalChicksPoultryFarm", "_blank");
   }
 
   return (
@@ -869,8 +871,11 @@ function Contact() {
                 />
 
                 <Button type="submit" className="w-full h-14 text-base font-bold bg-primary hover:bg-primary/90 rounded-xl mt-4">
-                  Send Inquiry via WhatsApp
+                  Send Inquiry via Messenger
                 </Button>
+                <p className="text-xs text-muted-foreground text-center -mt-2">
+                  Your inquiry details are copied to your clipboard — just paste them into the Messenger chat that opens.
+                </p>
               </form>
             </Form>
           </div>
