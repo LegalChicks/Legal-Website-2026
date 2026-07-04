@@ -998,18 +998,6 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
-
-      {/* Floating WhatsApp Button */}
-      <a 
-        href="https://wa.me/639369671213" 
-        target="_blank" 
-        rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform flex items-center justify-center group"
-        aria-label="Chat on WhatsApp"
-      >
-        <span className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-75"></span>
-        <MessageCircle size={28} className="relative z-10" />
-      </a>
     </div>
   );
 }
