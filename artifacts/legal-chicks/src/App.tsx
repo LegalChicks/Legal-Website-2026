@@ -747,6 +747,18 @@ function Contact() {
                 </div>
               </a>
 
+              <a href="https://www.facebook.com/LegalChicksPoultryFarm" target="_blank" rel="noopener noreferrer" className="flex items-start gap-5 group p-4 -ml-4 rounded-2xl hover:bg-white/5 transition-colors">
+                <div className="bg-white/10 text-white p-4 rounded-full group-hover:scale-110 group-hover:bg-[#1877F2] transition-all shadow-lg">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
+                    <path d="M22 12.06C22 6.505 17.523 2 12 2S2 6.505 2 12.06c0 5.023 3.657 9.184 8.438 9.94v-7.03H7.898v-2.91h2.54V9.845c0-2.507 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562v1.878h2.773l-.443 2.91h-2.33V22c4.78-.756 8.437-4.917 8.437-9.94Z"/>
+                  </svg>
+                </div>
+                <div>
+                  <h4 className="text-sm text-white/60 font-medium mb-1 uppercase tracking-wider">Facebook Messenger</h4>
+                  <p className="text-3xl font-bold text-white group-hover:text-secondary transition-colors">Message Us</p>
+                </div>
+              </a>
+
               <div className="flex items-start gap-5 p-4 -ml-4">
                 <div className="bg-white/10 text-white p-4 rounded-full">
                   <MapPin className="w-6 h-6" />
@@ -759,7 +771,9 @@ function Contact() {
 
               <div className="pt-8 border-t border-white/10 mt-8">
                 <p className="text-white/60 mb-2">Find us on Facebook:</p>
-                <p className="text-xl font-bold text-white mb-8">Search "Legal Chicks Poultry Farm"</p>
+                <a href="https://www.facebook.com/LegalChicksPoultryFarm" target="_blank" rel="noopener noreferrer" className="text-xl font-bold text-white mb-8 hover:text-secondary transition-colors inline-block underline decoration-secondary/50 underline-offset-4">
+                  Legal Chicks Poultry Farm
+                </a>
                 
                 <div className="inline-block border border-secondary/30 bg-secondary/10 px-6 py-4 rounded-xl backdrop-blur-sm">
                   <p className="font-serif text-xl text-secondary italic">"Laking alaga, laking malusog."</p>
